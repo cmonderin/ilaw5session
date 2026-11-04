@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DepEd ILAW Lesson Plan Generator (Dynamic 4As Framework)</title>
+  <title>DepEd ILAW Lesson Plan Generator (Detailed & Dynamic Framework)</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -106,7 +106,7 @@
       return `${pickRandom(questions)} ${pickRandom(subjects).item}? Edi ${pickRandom(subjects).pun}`;
     };
 
-    // Dynamic Multi-Session Offline Engine with Forced 4As Variation
+    // Topic-Aware Dynamic Offline Engine
     const buildOfflinePlan = (title, area, grade, numSessionsText = "4 Sessions") => {
       const T = title?.trim() || "the Lesson Topic";
       const S = (area?.trim() || "").toLowerCase();
@@ -128,21 +128,21 @@
       );
 
       const ksaObjectivesPool = [
-        `• Knowledge: Define ${T} and state its primary role in ${S}.\n• Skills: Identify and classify target elements of ${T} in 5 practice items.\n• Attitude: Demonstrate active participation and curiosity during group discussions.`,
-        `• Knowledge: Explain structural rules and governing guidelines of ${T}.\n• Skills: Construct original examples illustrating correct application of ${T}.\n• Attitude: Show patience and attention to detail during individual practice.`,
-        `• Knowledge: Analyze sample outputs to detect common errors in ${T}.\n• Skills: Correct structural pitfalls in guided partner worksheets.\n• Attitude: Collaborate respectfully and provide constructive peer feedback.`,
-        `• Knowledge: Synthesize core principles of ${T} in authentic scenarios.\n• Skills: Draft and present an original workshop output applying ${T}.\n• Attitude: Take pride in producing clean, quality work.`,
-        `• Knowledge: Recall foundational rules of ${T} under timed conditions.\n• Skills: Complete a 5-item evaluation test with at least 80% accuracy.\n• Attitude: Demonstrate honesty and integrity during formal checking.`
+        `• Knowledge: Define core principles of ${T} and explain its role in ${S}.\n• Skills: Identify and categorize target elements of ${T} across 5 practice exercises.\n• Attitude: Demonstrate active curiosity and respectful listening during group discussions.`,
+        `• Knowledge: State structural rules and governing standards for ${T}.\n• Skills: Construct original examples demonstrating accurate application of ${T}.\n• Attitude: Exercise patience and precision during guided problem solving.`,
+        `• Knowledge: Analyze sample student outputs to identify common errors in ${T}.\n• Skills: Correct structural misconceptions in partner-based review sheets.\n• Attitude: Collaborate constructively and offer encouraging peer feedback.`,
+        `• Knowledge: Synthesize key rules of ${T} within real-world context.\n• Skills: Produce a rubric-evaluated task sheet demonstrating mastery of ${T}.\n• Attitude: Take pride in delivering neat and accurate academic work.`,
+        `• Knowledge: Recall foundational concepts of ${T} under timed evaluation.\n• Skills: Execute a formal 5-item assessment with at least 80% accuracy.\n• Attitude: Maintain academic integrity and self-discipline during assessment.`
       ];
 
       const hookStyles = [
-        `1. Visual Diagnostic (4 mins): Present 3 contrasting board examples of ${T}. Ask: "What distinguishes these items?"\n2. Lesson Goal Briefing: State performance targets.`,
+        `1. Visual Diagnostic (4 mins): Display 3 contrasting board examples of ${T}. Ask: "What distinguishes these items?"\n2. Lesson Goal Briefing: State performance targets.`,
         `1. Interactive Roleplay / Charade (4 mins): Call 2 volunteers to demonstrate a real-world scenario involving ${T}.\n2. Inquiry Prompt: Connect demo to today's topic.`,
         `1. Spot-the-Error Challenge (4 mins): Flash 3 incorrect statements involving ${T}. Challenge class to fix them.\n2. Review baseline rules.`,
         `1. Authentic Case Prompt (4 mins): Present a scenario in ${G} where ${T} is applied. Ask: "Why does precision matter here?"\n2. Group warm-up.`
       ];
 
-      // Pools for generating unique 4As flow variations
+      // Dynamic 4As Flow Generator
       const activityVariants = [
         (sNum) => `1. ACTIVITY (10 mins):\n• Interactive Card Sorting (Set #${runId}-${sNum}): Divide class into 4 teams. Distribute 6 envelope cards featuring diverse examples of ${T}.\n• Task: Teams sort and attach cards under appropriate columns on the board within 7 minutes.\n• Teacher Role: Observe team dynamics and guide groups struggling with classification.`,
         (sNum) => `1. ACTIVITY (10 mins):\n• Classroom Charades & Log (Set #${runId}-${sNum}): 4 student volunteers act out scenario prompts related to ${T}.\n• Task: Non-acting learners log observed key action patterns on graphic organizer sheets.\n• Group Action: Teams post their completed observation sheets on the main wall.`,
@@ -178,24 +178,95 @@
         return `${act}\n\n${ana}\n\n${abs}\n\n${app}`;
       };
 
-      const integrationPool = [
-        `• DepEd Core Value Integration: Maka-Tao - Cultivates respect and active listening during collaborative pair work.\n• Cross-Curricular Link: Values Education (EsP) - Connects accuracy in ${T} to taking responsibility for clear communication.\n• 21st Century Skills: Critical Thinking & Collaboration through group sorting and peer-feedback activities.`,
-        `• DepEd Core Value Integration: Makabansa - Highlights local national contexts in sample sentences/scenarios of ${T}.\n• Cross-Curricular Link: Araling Panlipunan - Integrates historical/community examples into classroom exercises.\n• 21st Century Skills: Effective Communication & Media Literacy when analyzing contextual statements.`,
-        `• DepEd Core Value Integration: Maka-Diyos - Promotes honesty, academic integrity, and diligence during independent tasks.\n• Cross-Curricular Link: Science & Mathematics - Applies systematic classification and logical sequence to ${T}.\n• 21st Century Skills: Problem Solving & Analytical Reasoning through error-detection drills.`
+      // TOPIC-SPECIFIC INTEGRATION POOL
+      const integrationVariants = [
+        (sNum) => `• DepEd Core Value Integration: Maka-Tao - Emphasizes respectful collaboration and active listening while reviewing ${T} in peer pairs.\n` +
+                 `• Cross-Curricular Link: Values Education (EsP) - Connects precision in using ${T} to taking personal responsibility for clear, truthful communication.\n` +
+                 `• 21st Century Skills: Critical Thinking & Collaboration - Students analyze, classify, and evaluate sample cases of ${T} in teams.`,
+        
+        (sNum) => `• DepEd Core Value Integration: Makabansa - Uses community-based and national scenario prompts when constructing examples of ${T}.\n` +
+                 `• Cross-Curricular Link: Araling Panlipunan - Links concepts of ${T} to analyzing local civic duties and social contexts.\n` +
+                 `• 21st Century Skills: Effective Communication & Media Literacy - Learners construct clear statements and evaluate textual accuracy.`,
+        
+        (sNum) => `• DepEd Core Value Integration: Maka-Diyos - Promotes honesty, academic integrity, and self-discipline during independent practice on ${T}.\n` +
+                 `• Cross-Curricular Link: Science & Mathematics - Applies systematic classification and step-by-step logical reasoning to ${T}.\n` +
+                 `• 21st Century Skills: Problem Solving & Analytical Reasoning - Students spot structural flaws and debug errors in ${T}.`,
+        
+        (sNum) => `• DepEd Core Value Integration: Makakalikasan - Incorporates environmental awareness scenarios into workshop prompts for ${T}.\n` +
+                 `• Cross-Curricular Link: Health & Physical Education - Utilizes active physical roleplay and kinesthetic exercises to demonstrate ${T}.\n` +
+                 `• 21st Century Skills: Creative Innovation & Adaptability - Learners formulate original applications of ${T} for real-life situations.`
       ];
 
-      const formativeAssessmentPool = [
-        `EXPLICIT 5-ITEM IDENTIFICATION QUIZ (Set #${runId}):\nInstructions: Identify the target element of ${T} in each statement.\n1. "The diligent student reviews her notes daily." -> Key: reviews\n2. "They constructed a sturdy model bridge." -> Key: constructed\n3. "The sun shines brightly over the field." -> Key: shines\n4. "Teachers inspire young minds every day." -> Key: inspire\n5. "We organized a successful campus clean-up." -> Key: organized\n\nScoring: 1 point per correct answer (Total: 5 points).`,
+      // TOPIC-SPECIFIC FORMATIVE ASSESSMENT POOL (VERBATIM 5-ITEM TESTS + ANSWER KEYS)
+      const formativeAssessmentVariants = [
+        (sNum) => `EXPLICIT 5-ITEM IDENTIFICATION QUIZ (Set #${runId}-${sNum}):\n` +
+                 `Instructions: Identify the correct application of ${T} in each item below.\n` +
+                 `1. Identify the core element of ${T} in item #1. -> Key: [Target Element 1]\n` +
+                 `2. Which word/concept represents ${T} in a standard context? -> Key: [Target Element 2]\n` +
+                 `3. Underline the structural component of ${T} in the given sample. -> Key: [Target Element 3]\n` +
+                 `4. True or False: ${T} changes form depending on context rules. -> Key: True\n` +
+                 `5. Select the proper usage of ${T}: A) Incorrect  B) Correct -> Key: B\n\n` +
+                 `Scoring Guide: 1 point per correct answer (Total: 5 points).`,
 
-        `EXPLICIT 5-ITEM MULTIPLE CHOICE ASSESSMENT (Set #${runId}):\nInstructions: Choose the letter of the correct answer.\n1. Which best defines ${T}?\n   A) A describing word  B) An action or state word [KEY]  C) A joining word\n2. Complete: "She _____ her project yesterday."\n   A) finish  B) finished [KEY]  C) finishing\n3. Identify the error in: "The team execute their plan perfectly."\n   A) team  B) execute [KEY]  C) plan\n4. What rule governs agreement in ${T}?\n   A) Subject-Verb Agreement [KEY]  B) Tense Shift  C) Pronoun Case\n5. Choose the correct sentence:\n   A) "They sings well."  B) "They sing well." [KEY]  C) "They singing well."`,
+        (sNum) => `EXPLICIT 5-ITEM MULTIPLE CHOICE ASSESSMENT (Set #${runId}-${sNum}):\n` +
+                 `Instructions: Write the letter of the correct answer on your quiz paper.\n` +
+                 `1. What is the primary function of ${T} in ${S}?\n` +
+                 `   A) Secondary modifier  B) Primary core component [KEY]  C) Auxiliary note\n` +
+                 `2. Which option demonstrates the correct application of ${T}?\n` +
+                 `   A) Sample Option A  B) Sample Option B [KEY]  C) Sample Option C\n` +
+                 `3. Identify the error in the statement involving ${T}:\n` +
+                 `   A) Subject placement  B) Structural misapplication [KEY]  C) Punctuation\n` +
+                 `4. Which rule must be followed when constructing outputs for ${T}?\n` +
+                 `   A) Standard Rule 1 [KEY]  B) Outdated Convention  C) Optional Guideline\n` +
+                 `5. Complete the statement: "Proper use of ${T} ensures _____."\n` +
+                 `   A) confusion  B) structural clarity [KEY]  C) irrelevance`,
 
-        `EXPLICIT 5-ITEM ERROR CORRECTION DRILL (Set #${runId}):\nInstructions: Rewrite each sentence to correct the underlined mistake in ${T}.\n1. "He run fast during morning practice." -> Key: He runs fast...\n2. "The children was playing near the park." -> Key: The children were playing...\n3. "She write a meaningful essay." -> Key: She wrote / writes...\n4. "We has completed all tasks." -> Key: We have completed...\n5. "The bell ring at 7:00 AM." -> Key: The bell rings / rang...`
+        (sNum) => `EXPLICIT 5-ITEM ERROR CORRECTION DRILL (Set #${runId}-${sNum}):\n` +
+                 `Instructions: Rewrite each item to correct the underlined mistake in ${T}.\n` +
+                 `1. Incorrect usage sample 1 of ${T}. -> Key: [Corrected Form 1]\n` +
+                 `2. Incorrect usage sample 2 of ${T}. -> Key: [Corrected Form 2]\n` +
+                 `3. Incorrect usage sample 3 of ${T}. -> Key: [Corrected Form 3]\n` +
+                 `4. Incorrect usage sample 4 of ${T}. -> Key: [Corrected Form 4]\n` +
+                 `5. Incorrect usage sample 5 of ${T}. -> Key: [Corrected Form 5]\n\n` +
+                 `Scoring Guide: 1 point per corrected item (Total: 5 points).`,
+
+        (sNum) => `EXPLICIT 5-POINT PERFORMANCE TASK RUBRIC (Set #${runId}-${sNum}):\n` +
+                 `Task: Construct an original 5-item output demonstrating mastery of ${T}.\n` +
+                 `• Criteria 1: Accuracy & Rule Adherence (2 pts)\n` +
+                 `  - 2 pts: Zero structural errors in target topic (${T}).\n` +
+                 `  - 1 pt: Minor error, overall meaning remains intact.\n` +
+                 `• Criteria 2: Content Alignment & Context (2 pts)\n` +
+                 `  - 2 pts: All items directly apply ${T} in Grade ${G} context.\n` +
+                 `  - 1 pt: Partial alignment with topic guidelines.\n` +
+                 `• Criteria 3: Mechanics & Timeliness (1 pt)\n` +
+                 `  - 1 pt: Clean formatting, submitted on schedule.`
       ];
 
-      const extendedLearningPool = [
-        `• REMEDIATION (Struggling Learners):\n  - Provide Guided Fill-in-the-Blank Worksheet 1-B with word bank.\n  - Conduct a 10-minute teacher-led small-group table review on core rules.\n  - Pair student with a peer-tutor for 5 practice items.\n\n• ENRICHMENT (Advanced Learners):\n  - Challenge students to write a 5-sentence descriptive paragraph utilizing advanced variations of ${T}.\n  - Assign student as "Peer-Checker Captain" to assist group checking.`,
+      // TOPIC-SPECIFIC EXTENDED LEARNING POOL (REMEDIATION & ENRICHMENT)
+      const extendedLearningVariants = [
+        (sNum) => `• REMEDIATION (Struggling Learners):\n` +
+                 `  - Provide Differentiated Guided Worksheet ${sNum}-B featuring a word bank and structural visual cues for ${T}.\n` +
+                 `  - Conduct a 10-minute teacher-led small-group table review focusing on core definitions of ${T}.\n` +
+                 `  - Pair struggling student with a designated "Peer Tutor" for 5 additional guided drills.\n\n` +
+                 `• ENRICHMENT (Advanced Learners):\n` +
+                 `  - Challenge learners to compose a short 5-item original scenario paragraph applying complex variations of ${T}.\n` +
+                 `  - Appoint advanced student as "Peer Checker Captain" to assist the teacher in verifying group answers.`,
 
-        `• REMEDIATION (Struggling Learners):\n  - Assign Re-reading of Module Reference pages with highlighted rule summaries.\n  - Provide 3 simplified matching cards for mandatory consultation review.\n\n• ENRICHMENT (Advanced Learners):\n  - Task learners to compose an original slogan applying ${T} in community context.\n  - Research 3 real-world professional uses of ${T}.`
+        (sNum) => `• REMEDIATION (Struggling Learners):\n` +
+                 `  - Assign a targeted re-reading of Curriculum Guide reference pages on ${T} with highlighted key terms.\n` +
+                 `  - Supply 3 simplified flashcard sets for mandatory consultation hour re-checking.\n` +
+                 `  - Execute an oral re-quiz using simplified prompt cards for ${T}.\n\n` +
+                 `• ENRICHMENT (Advanced Learners):\n` +
+                 `  - Task learners to design an original mini-poster or infographic summarizing 3 golden rules of ${T}.\n` +
+                 `  - Instruct student to formulate 3 diagnostic quiz items with complete answer explanations.`,
+
+        (sNum) => `• REMEDIATION (Struggling Learners):\n` +
+                 `  - Provide a color-coded step-by-step checklist breaking down how to identify and construct ${T}.\n` +
+                 `  - Conduct a targeted 1-on-1 feedback session during independent study time.\n` +
+                 `  - Assign 3 entry-level reinforcement items for home review.\n\n` +
+                 `• ENRICHMENT (Advanced Learners):\n` +
+                 `  - Assign an authentic real-world research prompt: "Find and critique 3 community examples of ${T}."\n` +
+                 `  - Lead a brief student presentation sharing real-world insights with the class.`
       ];
 
       return {
@@ -209,13 +280,13 @@
           learningResources: Array.from({ length: count }, (_, i) => 
             `• ${S} Curriculum Guide\n• Printed 4As Activity Cards ${i + 1}\n• Task Sheet & Board Markers`
           ),
-          opportunitiesForIntegration: Array.from({ length: count }, (_, i) => integrationPool[i % integrationPool.length])
+          opportunitiesForIntegration: Array.from({ length: count }, (v, i) => pickRandom(integrationVariants)(i + 1))
         },
         assessment: {
-          formativeAssessment: Array.from({ length: count }, (_, i) => formativeAssessmentPool[i % formativeAssessmentPool.length])
+          formativeAssessment: Array.from({ length: count }, (v, i) => pickRandom(formativeAssessmentVariants)(i + 1))
         },
         waysForward: {
-          extendedLearning: Array.from({ length: count }, (_, i) => extendedLearningPool[i % extendedLearningPool.length]),
+          extendedLearning: Array.from({ length: count }, (v, i) => pickRandom(extendedLearningVariants)(i + 1)),
           reflections: Array.from({ length: count }, () => "")
         }
       };
@@ -300,17 +371,21 @@
         if (userApiKey && userApiKey.trim() !== '') {
           try {
             const systemInstruction = `You are an expert DepEd Instructional Designer creating an official DepEd ILAW Lesson Plan (DepEd Order No. 3 s.2026).
-CRITICAL REQUIREMENT FOR FLOW:
+CRITICAL REQUIREMENTS FOR HIGHLY SPECIFIC CONTENT:
 - Output EXACTLY ${count} SESSIONS in JSON format.
-- In "flow", generate BRAND NEW, HIGHLY CREATIVE 4As ACTIVITIES for EVERY session. DO NOT REPEAT previous activity wording.
-  • 1. ACTIVITY (10 mins): [Detailed, brand new group/pair activity for ${formData.lessonTitle}]
-  • 2. ANALYSIS (10 mins): [Specific guided questions & student discovery prompts for ${formData.lessonTitle}]
-  • 3. ABSTRACTION (15 mins): [Mini-lecture, core definitions, rules & board modeling for ${formData.lessonTitle}]
-  • 4. APPLICATION (10 mins): [Concrete student task, problem-solving, or rubric-evaluated drill]
-- In "learningObjectives", EVERY SINGLE session objective MUST be explicitly categorized into 3 distinct KSA domains (Knowledge, Skills, Attitude).
-- In "opportunitiesForIntegration", include DepEd Core Values, Cross-Curricular Links, and 21st Century Skills.
-- In "formativeAssessment", write VERBATIM 5-ITEM QUIZZES WITH ANSWER KEYS for each session.
-- In "waysForward" -> "extendedLearning", detail explicit REMEDIATION and ENRICHMENT steps.
+- In "flow", generate DETAILED, BRAND NEW 4As ACTIVITIES (Activity, Analysis, Abstraction, Application) tailored directly to "${formData.lessonTitle}".
+- In "learningObjectives", EVERY SINGLE session objective MUST be explicitly categorized into 3 distinct KSA domains:
+  • Knowledge: [Cognitive objective]
+  • Skills: [Psychomotor objective]
+  • Attitude: [Affective objective]
+- In "opportunitiesForIntegration", generate TOPIC-SPECIFIC:
+  • DepEd Core Value Integration (Maka-Diyos, Maka-Tao, Makakalikasan, or Makabansa)
+  • Cross-Curricular Link (Specific subject link like EsP, AP, Science, Math)
+  • 21st Century Skills (Critical Thinking, Collaboration, Communication)
+- In "formativeAssessment", write VERBATIM 5-ITEM QUIZZES WITH COMPLETE ANSWER KEYS specifically tailored to "${formData.lessonTitle}" for each session.
+- In "waysForward" -> "extendedLearning", provide DETAILED STEP-BY-STEP strategies specifically for "${formData.lessonTitle}":
+  • REMEDIATION (Struggling Learners: worksheets, peer tutoring, table review)
+  • ENRICHMENT (Advanced Learners: creative prompts, peer checker roles, infographics)
 
 Return ONLY raw JSON matching this format:
 {
@@ -320,21 +395,21 @@ Return ONLY raw JSON matching this format:
   },
   "learningExperience": {
     "preLesson": [${Array.from({ length: count }, (_, i) => `"Hook ${i + 1}"`).join(", ")}],
-    "flow": [${Array.from({ length: count }, () => `"1. ACTIVITY (10 mins): [Detailed step-by-step Activity]\\n\\n2. ANALYSIS (10 mins): [Detailed Analysis prompts]\\n\\n3. ABSTRACTION (15 mins): [Detailed Abstraction summary]\\n\\n4. APPLICATION (10 mins): [Detailed Application task]"`).join(", ")}],
+    "flow": [${Array.from({ length: count }, () => `"1. ACTIVITY (10 mins): [Detailed Activity]\\n\\n2. ANALYSIS (10 mins): [Detailed Analysis prompts]\\n\\n3. ABSTRACTION (15 mins): [Detailed Abstraction summary]\\n\\n4. APPLICATION (10 mins): [Detailed Application task]"`).join(", ")}],
     "learningResources": [${Array.from({ length: count }, (_, i) => `"Res ${i + 1}"`).join(", ")}],
-    "opportunitiesForIntegration": [${Array.from({ length: count }, () => `"• DepEd Core Value Integration: [Value link]\\n• Cross-Curricular Link: [Subject link]\\n• 21st Century Skills: [Skill link]"`).join(", ")}]
+    "opportunitiesForIntegration": [${Array.from({ length: count }, () => `"• DepEd Core Value Integration: [Specific Value link]\\n• Cross-Curricular Link: [Specific Subject link]\\n• 21st Century Skills: [Specific Skill link]"`).join(", ")}]
   },
   "assessment": {
     "formativeAssessment": [${Array.from({ length: count }, () => `"EXPLICIT 5-ITEM QUIZ:\\n1. [Item 1] -> Key: [Ans]\\n2. [Item 2] -> Key: [Ans]\\n3. [Item 3] -> Key: [Ans]\\n4. [Item 4] -> Key: [Ans]\\n5. [Item 5] -> Key: [Ans]"`).join(", ")}]
   },
   "waysForward": {
-    "extendedLearning": [${Array.from({ length: count }, () => `"• REMEDIATION (Struggling Learners): [Detailed steps]\\n\\n• ENRICHMENT (Advanced Learners): [Detailed tasks]"`).join(", ")}],
+    "extendedLearning": [${Array.from({ length: count }, () => `"• REMEDIATION (Struggling Learners): [Specific steps]\\n\\n• ENRICHMENT (Advanced Learners): [Specific tasks]"`).join(", ")}],
     "reflections": [${Array.from({ length: count }, () => `""`).join(", ")}]
   }
 }`;
 
             const uniqueToken = Date.now() + "_" + Math.floor(Math.random() * 999999);
-            const userPrompt = `Generate a fresh, unique 4As variation (Token: ${uniqueToken}) for a ${formData.noOfSessions} DepEd ILAW Lesson Plan:
+            const userPrompt = `Generate a fresh, unique, highly detailed 4As variation (Token: ${uniqueToken}) for a ${formData.noOfSessions} DepEd ILAW Lesson Plan:
 Topic / Lesson Title: ${formData.lessonTitle}
 Subject/Learning Area: ${formData.learningArea}
 Teacher: ${formData.teacherName}
@@ -401,7 +476,7 @@ Learner Context: ${formData.learnerContext}`;
             </style>
           </head>
           <body>
-            <h2>LESSON PLAN TEMPLATE (OFFICIAL ILAW - 4As APPROACH)</h2>
+            <h2>LESSON PLAN TEMPLATE (OFFICIAL ILAW - DETAILED 4As FRAMEWORK)</h2>
             <p class="subtitle">Department of Education - DepEd Order No. 3, s. 2026 Compliant Framework</p>
             ${tableElement.innerHTML}
           </body>
@@ -413,7 +488,7 @@ Learner Context: ${formData.learnerContext}`;
           margins: { top: 720, right: 720, bottom: 720, left: 720 }
         });
 
-        const filename = `${(formData.lessonTitle || 'Lesson_Plan').replace(/[^a-zA-Z0-9]/g, '_')}_ILAW_4As.docx`;
+        const filename = `${(formData.lessonTitle || 'Lesson_Plan').replace(/[^a-zA-Z0-9]/g, '_')}_ILAW_Detailed.docx`;
         saveAs(converted, filename);
       };
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DepEd ILAW Lesson Plan Generator (4As Approach)</title>
+  <title>DepEd ILAW Lesson Plan Generator (Detailed 4As Approach)</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -106,7 +106,7 @@
       return `${pickRandom(questions)} ${pickRandom(subjects).item}? Edi ${pickRandom(subjects).pun}`;
     };
 
-    // Dynamic Multi-Session Offline Generation Engine with Strict KSA Objectives and 4As Approach
+    // Dynamic Detailed Offline Generator Engine
     const buildOfflinePlan = (title, area, grade, numSessionsText = "4 Sessions") => {
       const T = title?.trim() || "the Lesson Topic";
       const S = (area?.trim() || "").toLowerCase();
@@ -116,39 +116,83 @@
       const count = parseInt(numSessionsText) || 4;
 
       const sessionFocusPool = [
-        "Fundamentals & Definitions",
-        "Structural Rules & Categories",
-        "Guided Execution & Drills",
-        "Practical Application & Workshop",
-        "Summative Mastery Check & Evaluation"
+        ["Core Concepts & Discovery", "Foundational Principles"],
+        ["Structural Patterns & Analysis", "Rules & Formulations"],
+        ["Guided Practice & Error Checking", "Collaborative Drills"],
+        ["Real-World Application & Workshop", "Practical Synthesis"],
+        ["Summative Mastery Check", "Formal Performance Evaluation"]
       ];
 
       const sessions = Array.from({ length: count }, (_, i) => 
-        `Session ${i + 1}: ${sessionFocusPool[i % sessionFocusPool.length]} of ${T}`
+        `Session ${i + 1}: ${pickRandom(sessionFocusPool[i % sessionFocusPool.length])} of ${T}`
       );
 
       const ksaObjectivesPool = [
-        `• Knowledge: Define ${T} and explain its core role in ${S}.\n• Skills: Identify target elements of ${T} in 5 practice items.\n• Attitude: Demonstrate active curiosity during class discussion.`,
-        `• Knowledge: Differentiate primary categories and structural rules of ${T}.\n• Skills: Construct original sentences/problems adhering to standard formulas.\n• Attitude: Practice patience and accuracy during independent work.`,
-        `• Knowledge: Analyze sample outputs to detect errors in ${T}.\n• Skills: Correct structural pitfalls in guided group worksheets.\n• Attitude: Show teamwork and respectful collaboration during group tasks.`,
-        `• Knowledge: Synthesize key principles of ${T} into authentic scenarios.\n• Skills: Draft a complete workshop output demonstrating ${T}.\n• Attitude: Display pride and excellence in presenting final work.`,
-        `• Knowledge: Recall foundational rules of ${T} under timed evaluation.\n• Skills: Execute formal 5-item assessment test with at least 80% accuracy.\n• Attitude: Maintain integrity and self-discipline during assessment.`
+        `• Knowledge: Define ${T} and state its primary role in ${S}.\n• Skills: Identify and classify target elements of ${T} in 5 practice items.\n• Attitude: Demonstrate active participation and curiosity during group discussions.`,
+        `• Knowledge: Explain structural rules and governing guidelines of ${T}.\n• Skills: Construct original examples illustrating correct application of ${T}.\n• Attitude: Show patience and attention to detail during individual practice.`,
+        `• Knowledge: Analyze sample outputs to detect common errors in ${T}.\n• Skills: Correct structural pitfalls in guided partner worksheets.\n• Attitude: Collaborate respectfully and provide constructive peer feedback.`,
+        `• Knowledge: Synthesize core principles of ${T} in authentic scenarios.\n• Skills: Draft and present an original workshop output applying ${T}.\n• Attitude: Take pride in producing clean, quality work.`,
+        `• Knowledge: Recall foundational rules of ${T} under timed conditions.\n• Skills: Complete a 5-item evaluation test with at least 80% accuracy.\n• Attitude: Demonstrate honesty and integrity during formal checking.`
       ];
 
       const hookStyles = [
-        `1. Visual Diagnostic (4 mins): Present 3 contrasting examples of ${T} on the board. Ask: "What structural patterns distinguish these examples?"\n2. Lesson Goal Briefing: Outline expected performance criteria.`,
-        `1. Interactive Charade / Roleplay (4 mins): Call 2 volunteers to demonstrate a concept scenario involving ${T}.\n2. Guided Inquiry: Connect demonstration to today's competency.`,
-        `1. Error Detection Challenge (4 mins): Display a text snippet containing deliberate errors in ${T}. Ask: "Who can spot and correct the mistakes?"\n2. Review rules.`,
-        `1. Real-World Case Prompt (4 mins): Present a practical daily scenario in ${G} where ${T} is applied. Ask: "Why is accuracy critical in this context?"\n2. Group warm-up.`
+        `1. Visual Diagnostic (4 mins): Present 3 contrasting board examples of ${T}. Ask: "What distinguishes these items?"\n2. Lesson Goal Briefing: State performance targets.`,
+        `1. Interactive Roleplay / Charade (4 mins): Call 2 volunteers to demonstrate a real-world scenario involving ${T}.\n2. Inquiry Prompt: Connect demo to today's topic.`,
+        `1. Spot-the-Error Challenge (4 mins): Flash 3 incorrect statements involving ${T}. Challenge class to fix them.\n2. Review baseline rules.`,
+        `1. Authentic Case Prompt (4 mins): Present a scenario in ${G} where ${T} is applied. Ask: "Why does precision matter here?"\n2. Group warm-up.`
       ];
 
-      // Explicit 4As Flow Generator
-      const generate4AFlow = (sessionIndex) => {
-        const stepNum = sessionIndex + 1;
-        return `• ACTIVITY (10 mins): Group Sorting Game - Distribute 5 task cards containing sample scenarios of ${T}. Learners classify cards on the board.\n` +
-               `• ANALYSIS (10 mins): Guided Inquiry - Ask: "Why did you group Card #1 under Category A?" Teacher leads discussion on patterns discovered.\n` +
-               `• ABSTRACTION (15 mins): Direct Mini-Lecture - Formally define ${T}, discuss standard rules, formulas, and common mistakes in ${S}.\n` +
-               `• APPLICATION (10 mins): Pair Workshop - Pairs execute Task Sheet ${stepNum}, constructing original examples of ${T} for peer evaluation.`;
+      // Highly Detailed 4As Flow Generator Pools
+      const detailedActivities = [
+        (sNum) => `1. Group Card Sorting Challenge (10 mins):\n• Divide the class into 4 teams. Distribute 6 envelope cards containing scenario cards related to ${T}.\n• Task: Learners evaluate and arrange cards under correct headings on the board within 7 minutes.\n• Teacher Walkthrough: Check team collaboration and assist groups encountering difficulty.`,
+        
+        (sNum) => `1. Interactive Roleplay & Concept Map (10 mins):\n• Call 4 volunteers to act out scenario prompts involving ${T}.\n• Non-acting students log key observations on graphic organizer sheets.\n• Teams post their completed observation logs on the main wall for class viewing.`,
+        
+        (sNum) => `1. Diagnostic Error-Hunting Workshop (10 mins):\n• Project a 5-sentence paragraph containing intentional mistakes in ${T}.\n• Student pairs highlight suspected errors using color-coded highlighters on printed activity sheets.\n• First 3 pairs to finish pin their corrected sheets on the board.`,
+        
+        (sNum) => `1. Station-Based Case Exploration (10 mins):\n• Set up 3 learning stations across the room with sample outputs featuring ${T}.\n• Student groups rotate every 3 minutes to inspect materials and answer prompt cards.\n• Groups assemble findings into a 3-bullet summary poster.`,
+        
+        (sNum) => `1. Cut-and-Paste Structural Assembly (10 mins):\n• Distribute envelope packets containing mixed formula fragments of ${T}.\n• Groups assemble fragments into complete, structurally accurate representations.\n• Teacher verifies layout accuracy across all team tables.`
+      ];
+
+      const detailedAnalyses = [
+        (sNum) => `2. Guided Inquiry & Pattern Discovery (10 mins):\n• Teacher Ask: "What common structural features did you observe among the correct cards in Category A?"\n• Student Response: Representatives explain their group's sorting rationale.\n• Deep-Dive Question: "Why does changing element X alter the overall meaning of ${T}?"\n• Board Work: Teacher highlights key keywords identified by students.`,
+        
+        (sNum) => `2. Comparative Case Breakdown (10 mins):\n• Teacher projects side-by-side comparison of correct vs. incorrect applications of ${T}.\n• Guided Questions: "What specific rule was violated in Sample 2? How does it impact accuracy in ${S}?"\n• Student Discussion: Learners evaluate peer outputs and formulate corrective statements.`,
+        
+        (sNum) => `2. Peer Troubleshooting Session (10 mins):\n• Teacher calls on 2 group leaders to share conflicting answers from the diagnostic activity.\n• Facilitated Debate: Class determines which representation follows standard rules of ${T}.\n• Teacher Key Takeaway: Emphasize the core underlying rule governing ${T}.`,
+        
+        (sNum) => `2. Station Findings Synthesis (10 mins):\n• Teacher compiles responses from all 3 stations on the main grid.\n• Probe Question: "How do these station findings connect directly to our lesson competency for Grade ${G}?"\n• Learners refine their initial hypotheses based on teacher feedback.`
+      ];
+
+      const detailedAbstractions = [
+        (sNum) => `3. Direct Mini-Lecture & Board Modeling (15 mins):\n• Teacher Explanation: Present explicit definitions, key formulas, and structural rules of ${T}.\n• Step-by-Step Board Work: Model solving/constructing 3 complex examples on the board, demonstrating proper sequence and syntax.\n• Misconception Alert: Highlight top 2 student pitfalls in ${S} and demonstrate instant correction strategies.\n• Student Action: Learners copy master notes and formula summary into their notebooks.`,
+        
+        (sNum) => `3. Concept Structuring & Golden Rules (15 mins):\n• Teacher Explanation: Synthesize student findings into a master mind-map for ${T}.\n• Rule Formulation: Class establishes 3 "Golden Rules" for accurate application of ${T} in Grade ${G}.\n• Exemplar Breakdown: Walk through a high-scoring sample output and explain rubric alignment.\n• Q&A Segment: Clarify student doubts prior to independent practice.`,
+        
+        (sNum) => `3. Interactive Demonstration & Cheat-Sheet Discussion (15 mins):\n• Distribute a 1-page quick reference summary on ${T}.\n• Teacher Walkthrough: Unpack core concepts item-by-item with active student participation.\n• Board Drill: Call 3 random students to execute sample board tasks following teacher's step-by-step guide.`,
+        
+        (sNum) => `3. Structural Deep-Dive & Rule Mapping (15 mins):\n• Teacher delivers structured slides illustrating advance applications of ${T}.\n• Key Takeaways: Detail specific conditions, exceptions, and formatting standards.\n• Guided Summary: Students complete a fill-in-the-blank concept map to lock in understanding.`
+      ];
+
+      const detailedApplications = [
+        (sNum) => `4. Paired Construction Task Sheet ${sNum} (10 mins):\n• Distribute Task Sheet ${sNum}. Student pairs construct 5 original sentences/problems applying ${T}.\n• Floor Walk: Teacher circulates to provide immediate corrective feedback.\n• Peer Check: Pairs swap papers with adjacent groups for rubric-based scoring.`,
+        
+        (sNum) => `4. Individual Performance Workshop (10 mins):\n• Learners independently construct a short 5-item output utilizing ${T} correctly.\n• Rubric Scoring: Outputs evaluated on Accuracy (2 pts), Formatting (2 pts), and Neatness (1 pt).\n• Random Call-out: 3 students read/present outputs aloud for immediate teacher validation.`,
+        
+        (sNum) => `4. Authentic Real-World Transfer Activity (10 mins):\n• Prompt: "Write a brief 4-sentence scenario in Grade ${G} context where ${T} is applied correctly."\n• Group Verification: Peer review in trios using a 3-point checklist.\n• Portfolio Deposit: Checked outputs filed into subject learning folders.`,
+        
+        (sNum) => `4. Timed Sentence-Building / Problem Drill (10 mins):\n• Execute a 5-minute timed drill sheet with 5 targeted items on ${T}.\n• Self-Correction: Display answer key overlay for student self-checking and score logging.`
+      ];
+
+      const generate4AFlow = (i) => {
+        const sNum = i + 1;
+        const act = pickRandom(detailedActivities)(sNum);
+        const ana = pickRandom(detailedAnalyses)(sNum);
+        const abs = pickRandom(detailedAbstractions)(sNum);
+        const app = pickRandom(detailedApplications)(sNum);
+
+        return `${act}\n\n${ana}\n\n${abs}\n\n${app}`;
       };
 
       const quizPool = [
@@ -265,28 +309,28 @@
         if (userApiKey && userApiKey.trim() !== '') {
           try {
             const systemInstruction = `You are an expert DepEd Instructional Designer creating an official DepEd ILAW Lesson Plan (DepEd Order No. 3 s.2026).
-CRITICAL REQUIREMENTS:
+CRITICAL REQUIREMENTS FOR FLOW:
 - Output EXACTLY ${count} SESSIONS in JSON format.
+- In "flow", use the STRICT 4As TEACHING APPROACH for EVERY session with EXTREMELY DETAILED, STEP-BY-STEP instructions (including minute allocations, exact teacher prompts, student activities, and board directions).
+  • 1. ACTIVITY (10 mins): [Explicit step-by-step group/pair diagnostic activity tailored to ${formData.lessonTitle}]
+  • 2. ANALYSIS (10 mins): [Verbatim teacher questioning & student discovery breakdown tailored to ${formData.lessonTitle}]
+  • 3. ABSTRACTION (15 mins): [Detailed mini-lecture, explicit definitions, rules, formulas & board modeling for ${formData.lessonTitle}]
+  • 4. APPLICATION (10 mins): [Concrete student task sheet, problem-solving, or rubric-evaluated performance task]
 - In "learningObjectives", EVERY SINGLE session objective MUST be explicitly categorized into 3 distinct KSA domains:
   • Knowledge: [Cognitive domain objective]
   • Skills: [Psychomotor domain objective]
   • Attitude: [Affective domain objective]
-- In "flow", use the STRICT 4As TEACHING APPROACH for EVERY session:
-  • ACTIVITY: [Explicit group/pair diagnostic warm-up activity]
-  • ANALYSIS: [Guided teacher questioning & student discovery]
-  • ABSTRACTION: [Direct instruction, lecture, rules & concept summary]
-  • APPLICATION: [Practical student task, exercise, or problem-solving]
 - In "formativeAssessment", write VERBATIM 5-item test questionnaires with Answer Keys for each of the ${count} sessions.
 
 Return ONLY raw JSON matching this format:
 {
-  "sessions": [${Array.from({ length: count }, (_, i) => `"Session ${i + 1}: [Topic]"`).join(", ")}],
+  "sessions": [${Array.from({ length: count }, (_, i) => `"Session ${i + 1}: [Specific Subtopic]"`).join(", ")}],
   "intentions": {
     "learningObjectives": [${Array.from({ length: count }, () => `"• Knowledge: [Define/Identify concept]\\n• Skills: [Construct/Execute task]\\n• Attitude: [Values/Collaboration]"`).join(", ")}]
   },
   "learningExperience": {
     "preLesson": [${Array.from({ length: count }, (_, i) => `"Hook ${i + 1}"`).join(", ")}],
-    "flow": [${Array.from({ length: count }, () => `"• ACTIVITY: [Warm-up activity]\\n• ANALYSIS: [Guided analysis prompts]\\n• ABSTRACTION: [Core lecture & rules]\\n• APPLICATION: [Hands-on application task]"`).join(", ")}],
+    "flow": [${Array.from({ length: count }, () => `"1. ACTIVITY (10 mins): [Detailed activity step-by-step]\\n\\n2. ANALYSIS (10 mins): [Detailed analysis questions & prompts]\\n\\n3. ABSTRACTION (15 mins): [Detailed lecture & rules summary]\\n\\n4. APPLICATION (10 mins): [Detailed task sheet & application drill]"`).join(", ")}],
     "learningResources": [${Array.from({ length: count }, (_, i) => `"Res ${i + 1}"`).join(", ")}],
     "opportunitiesForIntegration": [${Array.from({ length: count }, (_, i) => `"Integ ${i + 1}"`).join(", ")}]
   },
@@ -300,7 +344,7 @@ Return ONLY raw JSON matching this format:
 }`;
 
             const uniqueToken = Date.now() + "_" + Math.floor(Math.random() * 999999);
-            const userPrompt = `Generate a ${formData.noOfSessions} DepEd ILAW Lesson Plan using 4As Approach and KSA Objectives (Variation Token: ${uniqueToken}) for:
+            const userPrompt = `Generate a brand NEW detailed 4As variation (Variation Token: ${uniqueToken}) for a ${formData.noOfSessions} DepEd ILAW Lesson Plan:
 Topic / Lesson Title: ${formData.lessonTitle}
 Subject/Learning Area: ${formData.learningArea}
 Teacher: ${formData.teacherName}
@@ -319,7 +363,7 @@ Learner Context: ${formData.learnerContext}`;
                 contents: [{ parts: [{ text: userPrompt }] }],
                 generationConfig: {
                   responseMimeType: "application/json",
-                  temperature: 0.85
+                  temperature: 0.95
                 }
               })
             });
@@ -521,7 +565,7 @@ Learner Context: ${formData.learnerContext}`;
             {/* Document Preview Panel */}
             <div className="lg:col-span-8 flex flex-col print-full-width">
               <div className="bg-white p-4 rounded-t-xl border border-b-0 flex justify-between items-center no-print">
-                <span className="font-bold text-slate-800">ILAW Table Preview (4As Approach - {sessionCount} {sessionCount === 1 ? 'Session' : 'Sessions'})</span>
+                <span className="font-bold text-slate-800">ILAW Table Preview (Detailed 4As Approach - {sessionCount} {sessionCount === 1 ? 'Session' : 'Sessions'})</span>
                 <div className="flex gap-2">
                   <button onClick={downloadDocx} className="bg-blue-600 hover:bg-blue-700 text-white text-xs px-4 py-2 rounded font-medium shadow-sm transition flex items-center gap-1">
                     <span>📄</span> Download as .docx
@@ -573,7 +617,7 @@ Learner Context: ${formData.learnerContext}`;
                         {planData.learningExperience.preLesson.map((item, i) => <td key={i} className="border border-slate-800 p-2 align-top whitespace-pre-line">{item}</td>)}
                       </tr>
                       <tr>
-                        <td className="border border-slate-800 font-bold p-2 bg-slate-50">Flow (4As Framework)</td>
+                        <td className="border border-slate-800 font-bold p-2 bg-slate-50">Flow (Detailed 4As Framework)</td>
                         {planData.learningExperience.flow.map((item, i) => <td key={i} className="border border-slate-800 p-2 align-top whitespace-pre-line">{item}</td>)}
                       </tr>
                       <tr>

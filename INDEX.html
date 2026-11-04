@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DepEd ILAW Lesson Plan Generator</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- React & React DOM CDNs -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  
+  <!-- Babel Standalone CDN -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  
+  <!-- html-docx-js for native .docx generation -->
+  <script src="https://cdn.jsdelivr.net/npm/html-docx-js@0.3.1/dist/html-docx.min.js"></script>
+  
+  <!-- FileSaver.js for file saving -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+  
+  <style>
+    @media print {
+      body {
+        background-color: white !important;
+        color: black !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .print-full-width {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .print-table {
+        border-collapse: collapse !important;
+        width: 100% !important;
+      }
+      .print-table th, .print-table td {
+        border: 1px solid #000 !important;
+        padding: 6px !important;
+        color: #000 !important;
+      }
+      @page {
+        size: A4 landscape;
+        margin: 10mm;
+      }
+    }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans min-h-screen">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    const DEFAULT_FORM_DATA = {
+      lessonTitle: 'Application Software',
+      learningArea: 'TechPro ICT - Computer Systems Servicing',
+      teacherName: 'CARLOS C. MONDERIN',
+      gradeSection: 'Grade 11 – LOYALTY',
+      noOfSessions: '5 Sessions (NOVEMBER 9-13)',
+      learningCompetency: 'The learner demonstrates proficiency in utilizing appropriate application software to solve problems and complete daily tasks.',
+      contentStandard: 'The learner demonstrates an understanding of the core functions, features, and appropriate uses of various application software in solving problems and completing daily tasks.',
+      performanceStandard: 'The learner independently selects and proficiently utilizes appropriate application software to efficiently solve problems and complete daily academic or workplace tasks.',
+      references: 'DepEd ICT Curriculum Guide, Computer Systems Servicing NC II Modules, Online Toolkits',
+      aiDeclaration: 'Generated with the assistance of Gemini AI in compliance with DepEd DO 3 s.2026 Annex A for instructional design framing and activity structuring.',
+      learnerContext: 'The class consists of Grade 11 ICT learners with varied experience. Some are confident with mobile apps, gaming, online classes, and social media, while others have limited exposure to desktop computers and networking tools.'
+    };
+
+    function App() {
+      const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
+      const [planData, setPlanData] = useState(null);
+      const [loading, setLoading] = useState(false);
+      const [showDonateModal, setShowDonateModal] = useState(false);
+
+      // Load API key from local browser storage if available
+      const [userApiKey, setUserApiKey] = useState(() => {
+        return localStorage.getItem('deped_gemini_key') || '';
+      });
+
+      const handleApiKeyChange = (e) => {
+        const key = e.target.value;
+        setUserApiKey(key);
+        localStorage.setItem('deped_gemini_key', key);
+      };
+
+      const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+      };
+
+      // Full page reload trigger
+      const handleRefresh = () => {
+        window.location.reload();
+      };
+
+      const generatePlan = async () => {
+        setLoading(true);
+
+        // API Key Execution Mode
+        if (userApiKey && userApiKey.trim() !== '') {
+          try {
+            const systemInstruction = `You are an expert DepEd Instructional Designer creating an official DepEd ILAW Lesson Plan (DepEd Order No. 3 s.2026).
+Your task is to generate highly specific, actionable, and comprehensive content for EACH session based on the 4As approach.
+
+Return ONLY raw JSON matching this format:
+{
+  "sessions": ["Session 1: [Topic]", "Session 2: [Topic]", "Session 3: [Topic]", "Session 4: [Topic]", "Session 5: [Topic]"],
+  "intentions": {
+    "learningObjectives": ["Obj 1", "Obj 2", "Obj 3", "Obj 4", "Obj 5"]
+  },
+  "learningExperience": {
+    "preLesson": ["Pre 1", "Pre 2", "Pre 3", "Pre 4", "Pre 5"],
+    "flow": ["Flow 1", "Flow 2", "Flow 3", "Flow 4", "Flow 5"],
+    "learningResources": ["Res 1", "Res 2", "Res 3", "Res 4", "Res 5"],
+    "opportunitiesForIntegration": ["Int 1", "Int 2", "Int 3", "Int 4", "Int 5"]
+  },
+  "assessment": {
+    "formativeAssessment": ["Eval 1", "Eval 2", "Eval 3", "Eval 4", "Eval 5"]
+  },
+  "waysForward": {
+    "extendedLearning": ["Ext 1", "Ext 2", "Ext 3", "Ext 4", "Ext 5"],
+    "reflections": ["", "", "", "", ""]
+  }
+}`;
+
+            const userPrompt = `Generate a DepEd ILAW 5-Session Lesson Plan for:
+Lesson Title: ${formData.lessonTitle}
+Subject/Learning Area: ${formData.learningArea}
+Teacher: ${formData.teacherName}
+Grade & Section: ${formData.gradeSection}
+No. of Sessions: ${formData.noOfSessions}
+Learning Competency: ${formData.learningCompetency}
+Content Standard: ${formData.contentStandard}
+Performance Standard: ${formData.performanceStandard}
+Learner Context: ${formData.learnerContext}`;
+
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${userApiKey.trim()}`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                systemInstruction: { parts: [{ text: systemInstruction }] },
+                contents: [{ parts: [{ text: userPrompt }] }],
+                generationConfig: {
+                  responseMimeType: "application/json",
+                  temperature: 0.3
+                }
+              })
+            });
+
+            if (!response.ok) {
+              const errJson = await response.json();
+              console.warn("API Call Error, switching to dynamic offline generator:", errJson);
+            } else {
+              const data = await response.json();
+              const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+              if (rawText) {
+                setPlanData(JSON.parse(rawText));
+                setLoading(false);
+                return;
+              }
+            }
+          } catch (err) {
+            console.warn("Network Error, executing fallback engine.", err);
+          }
+        }
+
+        // Dynamic Offline Generator Mode (Executes when API Key is blank or fails)
+        setTimeout(() => {
+          const title = formData.lessonTitle || "the Lesson Topic";
+          const area = formData.learningArea || "the Subject Area";
+          const grade = formData.gradeSection || "Grade Level";
+
+          setPlanData({
+            sessions: [
+              `Session 1: Introduction to ${title}`,
+              `Session 2: Core Functions & Principles`,
+              `Session 3: Guided Practice & Troubleshooting`,
+              `Session 4: Hands-on Application Task`,
+              `Session 5: Practical Assessment & Synthesis`
+            ],
+            intentions: {
+              learningObjectives: [
+                `• Identify foundational concepts and basic principles of ${title} for ${grade}.`,
+                `• Explain core processes, technical rules, and standard features involved in ${title}.`,
+                `• Perform guided exercises using standard tools and procedures in ${area}.`,
+                `• Apply learned skills to solve practical scenario-based tasks efficiently.`,
+                `• Produce a complete practical output demonstrating proficiency in ${title}.`
+              ]
+            },
+            learningExperience: {
+              preLesson: [
+                `Show real-world samples or media related to ${title}. Ask learners to identify tools or methods used.`,
+                `Recall Session 1 terms. Present a workplace problem scenario caused by improper application of ${title}.`,
+                `Safety & Tool Inspection: Check readiness of workstation materials for guided exercises in ${area}.`,
+                `Distribute practical task sheets. Review criteria and rubrics for successful completion.`,
+                `Conduct a 3-minute retrieval quiz covering key concepts from Sessions 1 to 4.`
+              ],
+              flow: [
+                `1. Direct Instruction: Explain ${title} and its practical applications. 2. Guided Discussion: Analyze key terms.`,
+                `1. Demonstration: Model correct procedures and functions. 2. Group Drill: Learners perform guided practice.`,
+                `1. Hands-on Lab: Paired exercises completing basic tasks. 2. Teacher provides real-time feedback.`,
+                `1. Independent Task: Learners execute assigned practical project. 2. Teacher monitors safety and quality.`,
+                `1. Assessment Execution: Learners finalize and submit outputs. 2. Conduct peer review and debriefing.`
+              ],
+              learningResources: [
+                `${area} Curriculum Guide, Reference Modules, Presentation Slides`,
+                `Sample Worksheets, Demonstration Equipment, Standard Reference Charts`,
+                `Practical Workstations/Tools, Safety Checklists, Step-by-Step Guides`,
+                `Task Instruction Sheets, Performance Criteria, Workstation Equipment`,
+                `DepEd Performance Evaluation Rubric, Output Inspection Form`
+              ],
+              opportunitiesForIntegration: [
+                `Values Education: Professional responsibility, care for equipment, and digital ethics.`,
+                `English/Communication: Expressing technical procedures and ideas clearly.`,
+                `Mathematics/Logic: Structured step-by-step analytical problem-solving.`,
+                `ICT & Safety: Adhering to standard operating procedures and OHS guidelines.`,
+                `Workplace Readiness: Efficient documentation, time management, and quality output.`
+              ]
+            },
+            assessment: {
+              formativeAssessment: [
+                `Diagnostic Check: 5-item identification quiz on basic concepts of ${title}.`,
+                `Guided Drill Checklist: Verifying step accuracy during demonstration drills.`,
+                `Observation Checklist: Monitoring correct tool usage and safety compliance.`,
+                `Process Rubric: Rating step-by-step execution during independent work.`,
+                `DepEd Practical Performance Rubric measuring accuracy, quality, and speed.`
+              ]
+            },
+            waysForward: {
+              extendedLearning: [
+                `Research real-world workplace applications of ${title} in local community settings.`,
+                `Create a 1-page quick-reference guide summarizing key steps learned in class.`,
+                `Practice basic operations at home or during free laboratory access hours.`,
+                `Refine project outputs based on teacher feedback and peer suggestions.`,
+                `Organize all completed task sheets into an electronic learning portfolio.`
+              ],
+              reflections: ["", "", "", "", ""]
+            }
+          });
+          setLoading(false);
+        }, 600);
+      };
+
+      const downloadDocx = () => {
+        const tableElement = document.getElementById("ilaw-table-container");
+        if (!tableElement) return;
+
+        const content = `
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta charset="utf-8">
+            <style>
+              body { font-family: Arial, sans-serif; font-size: 9pt; }
+              table { border-collapse: collapse; width: 100%; margin-top: 10px; }
+              td, th { border: 1px solid #000000; padding: 6px; font-size: 9pt; vertical-align: top; }
+              .bg-header { background-color: #E2E8F0; font-weight: bold; }
+              .bg-sub { background-color: #F1F5F9; font-weight: bold; }
+              h2 { text-align: center; font-size: 14pt; font-weight: bold; margin-bottom: 2px; }
+              p.subtitle { text-align: center; font-size: 9pt; color: #475569; margin-top: 0; margin-bottom: 15px; }
+            </style>
+          </head>
+          <body>
+            <h2>LESSON PLAN TEMPLATE (OFFICIAL ILAW)</h2>
+            <p class="subtitle">Department of Education - DepEd Order No. 3, s. 2026 Compliant Framework</p>
+            ${tableElement.innerHTML}
+          </body>
+          </html>
+        `;
+
+        const converted = window.htmlDocx.asBlob(content, {
+          orientation: 'landscape',
+          margins: { top: 720, right: 720, bottom: 720, left: 720 }
+        });
+
+        const filename = `${(formData.lessonTitle || 'Lesson_Plan').replace(/[^a-zA-Z0-9]/g, '_')}_ILAW_Lesson_Plan.docx`;
+        saveAs(converted, filename);
+      };
+
+      return (
+        <div className="min-h-screen flex flex-col relative">
+          <header className="bg-blue-900 text-white shadow-md py-4 px-6 no-print flex justify-between items-center">
+            <div className="flex items-center gap-3">
+              <div className="bg-yellow-400 text-blue-950 font-black px-3 py-1 rounded tracking-wider text-xl">DepEd</div>
+              <div>
+                <h1 className="text-xl font-bold">ILAW Lesson Plan Generator</h1>
+                <p className="text-xs text-blue-200">Official DepEd Order No. 3, s. 2026 Compliant Format</p>
+              </div>
+            </div>
+            
+            <button 
+              onClick={() => setShowDonateModal(true)}
+              className="hidden sm:flex items-center gap-1.5 bg-blue-800 hover:bg-blue-700 text-yellow-300 border border-blue-600 text-xs py-1.5 px-3 rounded-lg font-semibold transition"
+            >
+              <span>☕</span> Buy the Dev Kape / Merienda
+            </button>
+          </header>
+
+          <main className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 p-6 max-w-[1700px] mx-auto w-full">
+            {/* Left Sidebar Input Form */}
+            <div className="lg:col-span-4 bg-white rounded-xl shadow-md border border-slate-200 p-5 space-y-4 no-print h-fit">
+              <h2 className="text-lg font-bold text-slate-800 border-b pb-2">Lesson Inputs</h2>
+              
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">Lesson Title</label>
+                <input type="text" name="lessonTitle" value={formData.lessonTitle} onChange={handleChange} className="w-full text-sm p-2 bg-slate-50 border rounded outline-none focus:ring-1 focus:ring-blue-500" />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">Learning Area / Subject</label>
+                <input type="text" name="learningArea" value={formData.learningArea} onChange={handleChange} className="w-full text-sm p-2 bg-slate-50 border rounded outline-none focus:ring-1 focus:ring-blue-500" />
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">Teacher Name</label>
+                  <input type="text" name="teacherName" value={formData.teacherName} onChange={handleChange} className="w-full text-sm p-2 bg-slate-50 border rounded outline-none focus:ring-1 focus:ring-blue-500" />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">Grade & Section</label>
+                  <input type="text" name="gradeSection" value={formData.gradeSection} onChange={handleChange} className="w-full text-sm p-2 bg-slate-50 border rounded outline-none focus:ring-1 focus:ring-blue-500" />
+                </div>
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">No. of Sessions</label>
+                <input type="text" name="noOfSessions" value={formData.noOfSessions} onChange={handleChange} className="w-full text-sm p-2 bg-slate-50 border rounded outline-none focus:ring-1 focus:ring-blue-500" />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">Learning Competency</label>
+                <textarea name="learningCompetency" rows="2" value={formData.learningCompetency} onChange={handleChange} className="w-full text-sm p-2 bg-slate-50 border rounded resize-none outline-none focus:ring-1 focus:ring-blue-500" />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">Content Standard</label>
+                <textarea name="contentStandard" rows="2" value={formData.contentStandard} onChange={handleChange} className="w-full text-sm p-2 bg-slate-50 border rounded resize-none outline-none focus:ring-1 focus:ring-blue-500" />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">Performance Standard</label>
+                <textarea name="performanceStandard" rows="2" value={formData.performanceStandard} onChange={handleChange} className="w-full text-sm p-2 bg-slate-50 border rounded resize-none outline-none focus:ring-1 focus:ring-blue-500" />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">Learner Context</label>
+                <textarea name="learnerContext" rows="3" value={formData.learnerContext} onChange={handleChange} className="w-full text-sm p-2 bg-slate-50 border rounded resize-none outline-none focus:ring-1 focus:ring-blue-500" />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">Gemini API Key (Optional for Live AI)</label>
+                <input 
+                  type="password" 
+                  placeholder="Paste AI Studio key (Saved locally on browser)..." 
+                  value={userApiKey} 
+                  onChange={handleApiKeyChange} 
+                  className="w-full text-xs p-2 bg-slate-50 border rounded outline-none focus:ring-1 focus:ring-blue-500" 
+                />
+                <p className="text-[10px] text-slate-500 mt-1">Leave blank to use the dynamic offline generator.</p>
+              </div>
+
+              {/* Action Buttons Row */}
+              <div className="flex gap-2 pt-2">
+                <button 
+                  onClick={generatePlan} 
+                  disabled={loading} 
+                  className="flex-1 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg shadow transition flex items-center justify-center gap-1.5 text-xs sm:text-sm"
+                >
+                  {loading ? "Generating..." : "⚡ GENERATE ILAW LESSON PLAN"}
+                </button>
+                <button 
+                  onClick={handleRefresh} 
+                  type="button"
+                  title="Reload Application Page"
+                  className="px-4 py-3 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-lg shadow-sm transition text-xs sm:text-sm flex items-center gap-1"
+                >
+                  <span>↻</span> Refresh
+                </button>
+              </div>
+            </div>
+
+            {/* Right Document Workspace Preview */}
+            <div className="lg:col-span-8 flex flex-col print-full-width">
+              <div className="bg-white p-4 rounded-t-xl border border-b-0 flex justify-between items-center no-print">
+                <span className="font-bold text-slate-800">ILAW Table Preview</span>
+                <div className="flex gap-2">
+                  <button onClick={downloadDocx} className="bg-blue-600 hover:bg-blue-700 text-white text-xs px-4 py-2 rounded font-medium shadow-sm transition flex items-center gap-1">
+                    <span>📄</span> Download as .docx
+                  </button>
+                  <button onClick={() => window.print()} className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-4 py-2 rounded font-medium shadow-sm transition flex items-center gap-1">
+                    <span>🖨️</span> Print / PDF
+                  </button>
+                </div>
+              </div>
+
+              <div className="bg-white border p-6 rounded-b-xl shadow-sm print-full-width overflow-x-auto">
+                <div className="min-w-[700px]" id="ilaw-table-container">
+                  <table className="w-full border-collapse border border-slate-800 text-xs print-table">
+                    <tbody>
+                      <tr><td className="border border-slate-800 font-bold p-2 bg-slate-50">Lesson Title</td><td className="border border-slate-800 p-2" colSpan="5">{formData.lessonTitle}</td></tr>
+                      <tr><td className="border border-slate-800 font-bold p-2 bg-slate-50">Learning Area/s</td><td className="border border-slate-800 p-2" colSpan="5">{formData.learningArea}</td></tr>
+                      <tr><td className="border border-slate-800 font-bold p-2 bg-slate-50">Name of Teacher/s</td><td className="border border-slate-800 p-2" colSpan="5">{formData.teacherName}</td></tr>
+                      <tr><td className="border border-slate-800 font-bold p-2 bg-slate-50">Grade Level and Section</td><td className="border border-slate-800 p-2" colSpan="5">{formData.gradeSection}</td></tr>
+                      <tr><td className="border border-slate-800 font-bold p-2 bg-slate-50">No. of Sessions</td><td className="border border-slate-800 p-2" colSpan="5">{formData.noOfSessions}</td></tr>
+                      <tr><td className="border border-slate-800 font-bold p-2 bg-slate-50">References</td><td className="border border-slate-800 p-2" colSpan="5">{formData.references}</td></tr>
+                      <tr><td className="border border-slate-800 font-bold p-2 bg-slate-50">Declaration of AI use</td><td className="border border-slate-800 p-2" colSpan="5">{formData.aiDeclaration}</td></tr>
+
+                      <tr className="bg-slate-100"><td className="border border-slate-800 font-bold p-2 bg-header" colSpan="6">INTENTIONS.</td></tr>
+                      <tr><td className="border border-slate-800 p-2 italic bg-slate-50" colSpan="6">Meaningful learning experiences are anchored in how we frame them. Start by deciding what you want learners to master by the end of the lesson - keep it clear and simple.</td></tr>
+                      <tr>
+                        <td className="border border-slate-800 font-bold p-2 bg-slate-50">Standards</td>
+                        <td className="border border-slate-800 p-2" colSpan="5">
+                          <strong>Competency:</strong> {formData.learningCompetency}<br />
+                          <strong>Content:</strong> {formData.contentStandard}<br />
+                          <strong>Performance:</strong> {formData.performanceStandard}
+                        </td>
+                      </tr>
+
+                      <tr className="bg-slate-200 font-bold text-center">
+                        <td className="border border-slate-800 p-2 bg-sub">Component</td>
+                        {(planData?.sessions || ["Session 1", "Session 2", "Session 3", "Session 4", "Session 5"]).map((s, i) => <td key={i} className="border border-slate-800 p-2 bg-sub">{s}</td>)}
+                      </tr>
+
+                      <tr>
+                        <td className="border border-slate-800 font-bold p-2 bg-slate-50">Learning Objectives</td>
+                        {(planData?.intentions?.learningObjectives || Array(5).fill("• Objective detail...")).map((item, i) => <td key={i} className="border border-slate-800 p-2 align-top">{item}</td>)}
+                      </tr>
+
+                      <tr><td className="border border-slate-800 font-bold p-2 bg-slate-50">Learner Context</td><td className="border border-slate-800 p-2" colSpan="5">{formData.learnerContext}</td></tr>
+
+                      <tr className="bg-slate-100"><td className="border border-slate-800 font-bold p-2 bg-header" colSpan="6">LEARNING EXPERIENCE.</td></tr>
+                      <tr>
+                        <td className="border border-slate-800 font-bold p-2 bg-slate-50">Pre-Lesson</td>
+                        {(planData?.learningExperience?.preLesson || Array(5).fill("Pre-lesson prompt...")).map((item, i) => <td key={i} className="border border-slate-800 p-2 align-top">{item}</td>)}
+                      </tr>
+                      <tr>
+                        <td className="border border-slate-800 font-bold p-2 bg-slate-50">Flow</td>
+                        {(planData?.learningExperience?.flow || Array(5).fill("Flow step...")).map((item, i) => <td key={i} className="border border-slate-800 p-2 align-top">{item}</td>)}
+                      </tr>
+                      <tr>
+                        <td className="border border-slate-800 font-bold p-2 bg-slate-50">Learning Resources</td>
+                        {(planData?.learningExperience?.learningResources || Array(5).fill("Resource items...")).map((item, i) => <td key={i} className="border border-slate-800 p-2 align-top">{item}</td>)}
+                      </tr>
+                      <tr>
+                        <td className="border border-slate-800 font-bold p-2 bg-slate-50">Integration</td>
+                        {(planData?.learningExperience?.opportunitiesForIntegration || Array(5).fill("Integration point...")).map((item, i) => <td key={i} className="border border-slate-800 p-2 align-top">{item}</td>)}
+                      </tr>
+
+                      <tr className="bg-slate-100"><td className="border border-slate-800 font-bold p-2 bg-header" colSpan="6">ASSESSMENT.</td></tr>
+                      <tr>
+                        <td className="border border-slate-800 font-bold p-2 bg-slate-50">Formative Assessment</td>
+                        {(planData?.assessment?.formativeAssessment || Array(5).fill("Formative task...")).map((item, i) => <td key={i} className="border border-slate-800 p-2 align-top">{item}</td>)}
+                      </tr>
+
+                      <tr className="bg-slate-100"><td className="border border-slate-800 font-bold p-2 bg-header" colSpan="6">WAYS FORWARD.</td></tr>
+                      <tr>
+                        <td className="border border-slate-800 font-bold p-2 bg-slate-50">Extended Learning</td>
+                        {(planData?.waysForward?.extendedLearning || Array(5).fill("Extended task...")).map((item, i) => <td key={i} className="border border-slate-800 p-2 align-top">{item}</td>)}
+                      </tr>
+                      <tr>
+                        <td className="border border-slate-800 font-bold p-2 bg-slate-50">Reflections</td>
+                        {(planData?.waysForward?.reflections || Array(5).fill("")).map((item, i) => <td key={i} className="border border-slate-800 p-2 h-12"></td>)}
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </main>
+
+          {/* Footer Banner */}
+          <footer className="mt-8 mb-6 px-6 text-center no-print">
+            <div className="max-w-xl mx-auto bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+              <p className="text-xs text-slate-700 leading-relaxed">
+                ☕ <strong>Enjoying this free tool?</strong> Built by a fellow teacher to save us hours of DepEd paperwork. If this app helped you today, a small GCash token for coffee or snack is deeply appreciated! 
+                <br />
+                <span className="font-semibold text-blue-900 mt-1 inline-block">GCash: <span className="font-mono font-bold text-blue-700">09092593030</span> (Carlos C. Monderin)</span>
+              </p>
+            </div>
+          </footer>
+
+          {/* Floating Support Button */}
+          <div className="fixed bottom-5 right-5 z-40 no-print">
+            <button 
+              onClick={() => setShowDonateModal(true)}
+              className="bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs py-2.5 px-4 rounded-full shadow-lg transition flex items-center gap-2 border border-amber-300 transform hover:scale-105"
+            >
+              <span>☕</span>
+              <span>Treat Dev to Coffee</span>
+            </button>
+          </div>
+
+          {/* Support Modal */}
+          {showDonateModal && (
+            <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 no-print">
+              <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl relative border border-slate-100 text-center">
+                <button 
+                  onClick={() => setShowDonateModal(false)}
+                  className="absolute top-3 right-3 text-slate-400 hover:text-slate-600 font-bold p-1 rounded-full text-base"
+                >
+                  ✕
+                </button>
+
+                <div className="text-3xl mb-1">💙</div>
+                <h3 className="text-lg font-bold text-slate-800">Teachers Supporting Teachers</h3>
+                <p className="text-xs text-slate-600 mt-2 leading-relaxed">
+                  Hi! I'm <strong>Carlos C. Monderin</strong>. I created this web application to help fellow Filipino educators simplify their lesson preparation and save precious hours on paperwork.
+                </p>
+                <p className="text-xs text-slate-600 mt-2 leading-relaxed">
+                  This tool will always remain <strong>100% free</strong>. If it brought ease to your teaching prep today and you'd like to chip in for coffee or merienda, any small amount is warmly appreciated!
+                </p>
+
+                <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 my-4">
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-blue-600 block mb-1">GCash Support</span>
+                  <div className="text-xl font-mono font-bold text-blue-950 tracking-wider">0909 259 3030</div>
+                  <div className="text-xs font-semibold text-slate-700 mt-0.5">Carlos C. Monderin</div>
+                </div>
+
+                <p className="text-[11px] text-slate-400 italic">
+                  Kahit simple prayer or thank you lang, sapat na po! Happy teaching! 🙏
+                </p>
+
+                <button 
+                  onClick={() => setShowDonateModal(false)}
+                  className="mt-4 w-full py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-lg transition"
+                >
+                  Back to Planner
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
+</body>
+</html>

@@ -59,26 +59,109 @@
     const { useState } = React;
 
     const DEFAULT_FORM_DATA = {
-      lessonTitle: 'Application Software',
-      learningArea: 'TechPro ICT - Computer Systems Servicing',
+      lessonTitle: 'Verbs (Action Words)',
+      learningArea: 'English / Language Arts',
       teacherName: 'CARLOS C. MONDERIN',
-      gradeSection: 'Grade 11 – LOYALTY',
-      noOfSessions: '5 Sessions (NOVEMBER 9-13)',
-      learningCompetency: 'The learner demonstrates proficiency in utilizing appropriate application software to solve problems and complete daily tasks.',
-      contentStandard: 'The learner demonstrates an understanding of the core functions, features, and appropriate uses of various application software in solving problems and completing daily tasks.',
-      performanceStandard: 'The learner independently selects and proficiently utilizes appropriate application software to efficiently solve problems and complete daily academic or workplace tasks.',
-      references: 'DepEd ICT Curriculum Guide, Computer Systems Servicing NC II Modules, Online Toolkits',
+      gradeSection: 'Grade 7 – LOYALTY',
+      noOfSessions: '5 Sessions',
+      learningCompetency: 'The learner identifies and uses verbs correctly in sentences to express actions, states, and conditions.',
+      contentStandard: 'The learner demonstrates understanding of English grammar conventions and sentence structure.',
+      performanceStandard: 'The learner correctly constructs oral and written sentences using appropriate action verbs.',
+      references: 'DepEd English Curriculum Guide, Learner\'s Material Module 2',
       aiDeclaration: 'Generated with the assistance of Gemini AI in compliance with DepEd DO 3 s.2026 Annex A for instructional design framing and activity structuring.',
-      learnerContext: 'The class consists of Grade 11 ICT learners with varied experience. Some are confident with mobile apps, gaming, online classes, and social media, while others have limited exposure to desktop computers and networking tools.'
+      learnerContext: 'The class consists of Grade 7 learners with diverse language backgrounds. Most respond well to interactive visual games, roleplay, and sentence-building drills.'
+    };
+
+    // Deeply detailed offline template builder
+    const buildOfflinePlan = (title, area, grade) => {
+      const T = title?.trim() || "the Lesson Topic";
+      const S = area?.trim() || "the Subject";
+      const G = grade?.trim() || "the Class";
+
+      return {
+        sessions: [
+          `Session 1: Definition & Identification of ${T}`,
+          `Session 2: Classifications & Structural Rules of ${T}`,
+          `Session 3: Guided Sentence Construction & Analysis`,
+          `Session 4: Practical Workshop & Group Demonstration`,
+          `Session 5: Timed Performance Task & Mastery Assessment`
+        ],
+        intentions: {
+          learningObjectives: [
+            `• Define ${T} in your own words and identify them in 5 sample sentences.\n• List 3 distinct characteristics of ${T} in ${S}.`,
+            `• Differentiate regular vs. irregular structures of ${T}.\n• Formulate 5 correct examples adhering to standard rules.`,
+            `• Analyze 5 given sentences and correct errors in ${T} usage.\n• Collaborate with peers to create a 3-sentence narrative.`,
+            `• Construct a 1-page written output demonstrating proper application of ${T}.\n• Present output to class following visual and grammatical rubrics.`,
+            `• Complete a 5-item evaluation test on ${T} with 80% accuracy.\n• Self-assess performance using the standard DepEd checklist.`
+          ]
+        },
+        learningExperience: {
+          preLesson: [
+            `1. Diagnostic Prompt (3 mins): Write 3 actions on the board (e.g., Run, Jump, Write). Ask: "What do these words have in common?"\n2. Hook: Show a short 2-minute video/picture showing people performing daily tasks. Ask: "Can a sentence exist without an action word?"`,
+            `1. Retrieval Drill (3 mins): Flashcards with 5 words from Session 1. Learners shout "ACTION" or "NOT ACTION".\n2. Scenario Prompt: "Imagine telling a friend how to cook rice without using any action words. Is it possible?"`,
+            `1. Error Detection Warm-up (4 mins): Display on board: "She run to school yesterday." Ask: "What feels incorrect about this sentence and how do we fix it?"\n2. Group Check: Assign safety and materials officers per group.`,
+            `1. Workshop Briefing (5 mins): Distribute Task Sheet 4. Read instructions aloud: "Each group will draft a 5-step instructional guide using active ${T}."\n2. Materials distribution and role assignment.`,
+            `1. Quiet Review (5 mins): Allow learners 5 minutes to review their quick-reference summary sheets.\n2. Distribute Evaluation Sheet and clarify test rules.`
+          ],
+          flow: [
+            `1. Direct Instruction (15 mins): Teacher presents definition, types, and examples of ${T} using slides/board.\n2. Board Drill (10 mins): Call 5 learners to underline ${T} in sample sentences.\n3. Guided Activity (15 mins): In pairs, learners complete Worksheet 1 (Underlining target words).\n4. Synthesis (5 mins): Teacher summarizes core rule: "${T} expresses action or state of being."`,
+            `1. Interactive Mini-Lecture (15 mins): Teacher explains structural rules and classifications of ${T}.\n2. Board Practice (10 mins): Transform regular items into irregular forms as a class.\n3. Pair Work (15 mins): Learners complete Classification Matrix Worksheet 2.\n4. Quick Check (5 mins): Random call-out for 3 student responses.`,
+            `1. Guided Analysis (15 mins): Teacher models step-by-step sentence correction on board.\n2. Collaborative Group Task (20 mins): Groups of 4 receive 5 jumbled or incorrect sentence cards to correct and arrange into a coherent paragraph.\n3. Group Reporting (10 mins): Representatives read corrected outputs.`,
+            `1. Hands-on Execution (25 mins): Learners independently construct an original 1-page composition/output applying ${T}.\n2. Teacher Monitoring (15 mins): Teacher conducts floor walks, providing immediate corrective feedback.\n3. Peer Exchange (5 mins): Swap papers for initial peer review.`,
+            `1. Test Execution (25 mins): Learners independently complete the 5-item summative assessment.\n2. Submission & Checking (15 mins): Exchange papers for guided class correction.\n3. Debriefing & Reflection (5 mins): Teacher highlights common correct items and areas for improvement.`
+          ],
+          learningResources: [
+            `• ${S} Curriculum Guide (p. 45-48)\n• Printed Worksheet 1: Word Identification\n• Visual Concept Poster on ${T}\n• Whiteboard & Markers`,
+            `• Reference Textbook Chapter 3\n• Printed Worksheet 2: Classification Matrix\n• Flashcards (20 vocabulary items)\n• Manila Paper`,
+            `• Sentence Correction Task Cards (Set A & B)\n• Group Activity Envelopes\n• Chart Paper & Markers\n• Scoring Rubric Sheet`,
+            `• Practical Workshop Task Sheet 4\n• Standard Composition Sheets\n• Output Evaluation Rubric\n• Highlighters`,
+            `• Printed 5-Item Assessment Test Sheets\n• Answer Key Overlay\n• Student Self-Reflection Logs\n• DepEd Grading Sheet`
+          ],
+          opportunitiesForIntegration: [
+            `• Language Arts: Enhancing sentence clarity and grammatical precision.\n• Values Education: Active listening and respectful collaboration during paired drills.`,
+            `• Critical Thinking: Categorizing terms logically based on structural patterns.\n• Mathematics: Counting structural rules and calculating accuracy percentages.`,
+            `• Communication Skills: Articulating thought processes clearly during group reporting.\n• Peer Mentoring: Stronger learners supporting group mates during analysis.`,
+            `• Workplace Readiness: Producing clean, professional written outputs adhering to guidelines.\n• Time Management: Completing independent writing within allotted 25 minutes.`,
+            `• Personal Integrity: Maintaining honesty and independence during formal evaluation.\n• Self-Regulation: Reflecting on personal learning gaps and areas to review.`
+          ]
+        },
+        assessment: {
+          formativeAssessment: [
+            `EXPLICIT 5-ITEM IDENTIFICATION QUIZ:\nDirections: Read each sentence. Write the ${T} on your paper.\n1. "The diligent student writes her assignment every evening." -> Answer: writes\n2. "Filipino athletes compete proudly in international games." -> Answer: compete\n3. "Teachers prepare engaging lessons for their classes." -> Answer: prepare\n4. "Rain fell heavily across the province last night." -> Answer: fell\n5. "We celebrate our cultural heritage together." -> Answer: celebrate`,
+
+            `EXPLICIT 5-ITEM MULTIPLE CHOICE QUIZ:\n1. Which word expresses an action in: "The birds fly high"?\n   A) The  B) birds  C) fly [KEY]  D) high\n2. Select the correct form to complete: "She _____ to school yesterday."\n   A) walk  B) walked [KEY]  C) walking  D) walks\n3. Identify the state-of-being word: "They are very polite."\n   A) They  B) are [KEY]  C) very  D) polite\n4. Which sentence contains an action word?\n   A) Clear water  B) Blue sky  C) Students read books [KEY]  D) Green trees\n5. Choose the appropriate word: "The chef _____ a delicious meal."\n   A) cooks [KEY]  B) spoon  C) kitchen  D) plate`,
+
+            `EXPLICIT 5-ITEM ERROR CORRECTION DRILL:\nDirections: Rewrite each sentence correcting the underlined error.\n1. "He play basketball every Saturday." -> Key: He plays basketball every Saturday.\n2. "They was happy about the results." -> Key: They were happy about the results.\n3. "She write a letter to her grandmother yesterday." -> Key: She wrote a letter to her grandmother yesterday.\n4. "The cat catch the mouse quickly." -> Key: The cat caught / catches the mouse quickly.\n5. "We is ready for the upcoming exam." -> Key: We are ready for the upcoming exam.`,
+
+            `EXPLICIT 5-POINT PERFORMANCE TASK RUBRIC:\nEvaluate student composition based on:\n1. Grammatical Accuracy of ${T} (2 pts): All target words used correctly.\n2. Sentence Structure (1 pt): Complete sentences with proper capitalization.\n3. Content Alignment (1 pt): Directly answers prompt topic.\n4. Timeliness (1 pt): Output submitted within allotted 25 minutes.\nTotal Score: / 5 Points`,
+
+            `EXPLICIT 5-ITEM SUMMATIVE EVALUATION:\n1. Define ${T} in 1 sentence. (Key: A word used to describe an action, state, or occurrence.)\n2. Underline the action word: "The dog barked loudly at strangers." (Key: barked)\n3. Change "sing" into past tense. (Key: sang)\n4. Fill in: "Farmers _____ crops to feed the nation." (Key: plant / grow)\n5. Write 1 original sentence using the word "study". (Key: Evaluated via rubric)`
+          ]
+        },
+        waysForward: {
+          extendedLearning: [
+            `• Remediation Task: Provide Worksheet 1-B (5 guided fill-in-the-blank items with word bank) for learners scoring 2 below benchmark.\n• Enrichment Task: Write a 3-sentence diary entry about your morning routine, underlining all action words used.`,
+            `• Remediation Task: Peer mentoring session pairing proficient students with struggling peers during 10-minute break.\n• Enrichment Task: Find 5 action words in a news article and list their base forms.`,
+            `• Remediation Task: Teacher conducts a 10-minute small-group table guided review focusing on basic subject-verb alignment.\n• Enrichment Task: Draft a 5-line poem using at least 4 dynamic action words.`,
+            `• Remediation Task: Complete guided paragraph completion sheet with visual prompts.\n• Enrichment Task: Transform a passive story paragraph into active voice using vivid action words.`,
+            `• Remediation Task: Re-take targeted 3-item oral check during consultation hours.\n• Enrichment Task: Compile all corrected worksheets and reflection logs into an organized portfolio folder.`
+          ],
+          reflections: ["", "", "", "", ""]
+        }
+      };
     };
 
     function App() {
       const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
-      const [planData, setPlanData] = useState(null);
+      
+      // Initialize with populated data immediately
+      const [planData, setPlanData] = useState(() => 
+        buildOfflinePlan(DEFAULT_FORM_DATA.lessonTitle, DEFAULT_FORM_DATA.learningArea, DEFAULT_FORM_DATA.gradeSection)
+      );
+      
       const [loading, setLoading] = useState(false);
       const [showDonateModal, setShowDonateModal] = useState(false);
 
-      // Load API key from local browser storage if available
       const [userApiKey, setUserApiKey] = useState(() => {
         return localStorage.getItem('deped_gemini_key') || '';
       });
@@ -94,7 +177,6 @@
         setFormData(prev => ({ ...prev, [name]: value }));
       };
 
-      // Full page reload trigger
       const handleRefresh = () => {
         window.location.reload();
       };
@@ -102,35 +184,44 @@
       const generatePlan = async () => {
         setLoading(true);
 
-        // API Key Execution Mode
+        // API Key Live Generation Mode
         if (userApiKey && userApiKey.trim() !== '') {
           try {
             const systemInstruction = `You are an expert DepEd Instructional Designer creating an official DepEd ILAW Lesson Plan (DepEd Order No. 3 s.2026).
-Your task is to generate highly specific, actionable, and comprehensive content for EACH session based on the 4As approach.
+CRITICAL REQUIREMENT: Make the output EXTREMELY DETAILED and STEP-BY-STEP so a substitute teacher can execute it verbatim.
+- In "flow", include explicit minute breakdowns, teacher scripts, student actions, and board directions.
+- In "preLesson", write out exact diagnostic prompts, video/picture hooks, and teacher questions.
+- In "formativeAssessment", write the VERBATIM 5-item test questionnaires, full Answer Keys, and complete scoring rubrics for each session.
 
 Return ONLY raw JSON matching this format:
 {
-  "sessions": ["Session 1: [Topic]", "Session 2: [Topic]", "Session 3: [Topic]", "Session 4: [Topic]", "Session 5: [Topic]"],
+  "sessions": ["Session 1: [Specific Topic]", "Session 2: [Specific Topic]", "Session 3: [Specific Topic]", "Session 4: [Specific Topic]", "Session 5: [Specific Topic]"],
   "intentions": {
-    "learningObjectives": ["Obj 1", "Obj 2", "Obj 3", "Obj 4", "Obj 5"]
+    "learningObjectives": ["Detailed Obj 1", "Detailed Obj 2", "Detailed Obj 3", "Detailed Obj 4", "Detailed Obj 5"]
   },
   "learningExperience": {
-    "preLesson": ["Pre 1", "Pre 2", "Pre 3", "Pre 4", "Pre 5"],
-    "flow": ["Flow 1", "Flow 2", "Flow 3", "Flow 4", "Flow 5"],
-    "learningResources": ["Res 1", "Res 2", "Res 3", "Res 4", "Res 5"],
-    "opportunitiesForIntegration": ["Int 1", "Int 2", "Int 3", "Int 4", "Int 5"]
+    "preLesson": ["Detailed hook & questions 1", "Detailed hook & questions 2", "Detailed hook & questions 3", "Detailed hook & questions 4", "Detailed hook & questions 5"],
+    "flow": ["Verbatim step-by-step 1", "Verbatim step-by-step 2", "Verbatim step-by-step 3", "Verbatim step-by-step 4", "Verbatim step-by-step 5"],
+    "learningResources": ["Specific Res 1", "Specific Res 2", "Specific Res 3", "Specific Res 4", "Specific Res 5"],
+    "opportunitiesForIntegration": ["Integration 1", "Integration 2", "Integration 3", "Integration 4", "Integration 5"]
   },
   "assessment": {
-    "formativeAssessment": ["Eval 1", "Eval 2", "Eval 3", "Eval 4", "Eval 5"]
+    "formativeAssessment": [
+      "Verbatim 5-item quiz + Answer Key for Session 1",
+      "Verbatim 5-item quiz + Answer Key for Session 2",
+      "Verbatim 5-item quiz + Answer Key for Session 3",
+      "Verbatim 5-item quiz + Answer Key for Session 4",
+      "Verbatim 5-item quiz + Answer Key for Session 5"
+    ]
   },
   "waysForward": {
-    "extendedLearning": ["Ext 1", "Ext 2", "Ext 3", "Ext 4", "Ext 5"],
+    "extendedLearning": ["Remediation + Enrichment 1", "Remediation + Enrichment 2", "Remediation + Enrichment 3", "Remediation + Enrichment 4", "Remediation + Enrichment 5"],
     "reflections": ["", "", "", "", ""]
   }
 }`;
 
-            const userPrompt = `Generate a DepEd ILAW 5-Session Lesson Plan for:
-Lesson Title: ${formData.lessonTitle}
+            const userPrompt = `Generate a fully detailed, verbatim DepEd ILAW Lesson Plan for:
+Topic / Lesson Title: ${formData.lessonTitle}
 Subject/Learning Area: ${formData.learningArea}
 Teacher: ${formData.teacherName}
 Grade & Section: ${formData.gradeSection}
@@ -148,14 +239,14 @@ Learner Context: ${formData.learnerContext}`;
                 contents: [{ parts: [{ text: userPrompt }] }],
                 generationConfig: {
                   responseMimeType: "application/json",
-                  temperature: 0.3
+                  temperature: 0.2
                 }
               })
             });
 
             if (!response.ok) {
               const errJson = await response.json();
-              console.warn("API Call Error, switching to dynamic offline generator:", errJson);
+              console.warn("API Call Error, switching to detailed offline generator:", errJson);
             } else {
               const data = await response.json();
               const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text;
@@ -170,81 +261,11 @@ Learner Context: ${formData.learnerContext}`;
           }
         }
 
-        // Dynamic Offline Generator Mode (Executes when API Key is blank or fails)
+        // Detailed Offline Generator Mode
         setTimeout(() => {
-          const title = formData.lessonTitle || "the Lesson Topic";
-          const area = formData.learningArea || "the Subject Area";
-          const grade = formData.gradeSection || "Grade Level";
-
-          setPlanData({
-            sessions: [
-              `Session 1: Introduction to ${title}`,
-              `Session 2: Core Functions & Principles`,
-              `Session 3: Guided Practice & Troubleshooting`,
-              `Session 4: Hands-on Application Task`,
-              `Session 5: Practical Assessment & Synthesis`
-            ],
-            intentions: {
-              learningObjectives: [
-                `• Identify foundational concepts and basic principles of ${title} for ${grade}.`,
-                `• Explain core processes, technical rules, and standard features involved in ${title}.`,
-                `• Perform guided exercises using standard tools and procedures in ${area}.`,
-                `• Apply learned skills to solve practical scenario-based tasks efficiently.`,
-                `• Produce a complete practical output demonstrating proficiency in ${title}.`
-              ]
-            },
-            learningExperience: {
-              preLesson: [
-                `Show real-world samples or media related to ${title}. Ask learners to identify tools or methods used.`,
-                `Recall Session 1 terms. Present a workplace problem scenario caused by improper application of ${title}.`,
-                `Safety & Tool Inspection: Check readiness of workstation materials for guided exercises in ${area}.`,
-                `Distribute practical task sheets. Review criteria and rubrics for successful completion.`,
-                `Conduct a 3-minute retrieval quiz covering key concepts from Sessions 1 to 4.`
-              ],
-              flow: [
-                `1. Direct Instruction: Explain ${title} and its practical applications. 2. Guided Discussion: Analyze key terms.`,
-                `1. Demonstration: Model correct procedures and functions. 2. Group Drill: Learners perform guided practice.`,
-                `1. Hands-on Lab: Paired exercises completing basic tasks. 2. Teacher provides real-time feedback.`,
-                `1. Independent Task: Learners execute assigned practical project. 2. Teacher monitors safety and quality.`,
-                `1. Assessment Execution: Learners finalize and submit outputs. 2. Conduct peer review and debriefing.`
-              ],
-              learningResources: [
-                `${area} Curriculum Guide, Reference Modules, Presentation Slides`,
-                `Sample Worksheets, Demonstration Equipment, Standard Reference Charts`,
-                `Practical Workstations/Tools, Safety Checklists, Step-by-Step Guides`,
-                `Task Instruction Sheets, Performance Criteria, Workstation Equipment`,
-                `DepEd Performance Evaluation Rubric, Output Inspection Form`
-              ],
-              opportunitiesForIntegration: [
-                `Values Education: Professional responsibility, care for equipment, and digital ethics.`,
-                `English/Communication: Expressing technical procedures and ideas clearly.`,
-                `Mathematics/Logic: Structured step-by-step analytical problem-solving.`,
-                `ICT & Safety: Adhering to standard operating procedures and OHS guidelines.`,
-                `Workplace Readiness: Efficient documentation, time management, and quality output.`
-              ]
-            },
-            assessment: {
-              formativeAssessment: [
-                `Diagnostic Check: 5-item identification quiz on basic concepts of ${title}.`,
-                `Guided Drill Checklist: Verifying step accuracy during demonstration drills.`,
-                `Observation Checklist: Monitoring correct tool usage and safety compliance.`,
-                `Process Rubric: Rating step-by-step execution during independent work.`,
-                `DepEd Practical Performance Rubric measuring accuracy, quality, and speed.`
-              ]
-            },
-            waysForward: {
-              extendedLearning: [
-                `Research real-world workplace applications of ${title} in local community settings.`,
-                `Create a 1-page quick-reference guide summarizing key steps learned in class.`,
-                `Practice basic operations at home or during free laboratory access hours.`,
-                `Refine project outputs based on teacher feedback and peer suggestions.`,
-                `Organize all completed task sheets into an electronic learning portfolio.`
-              ],
-              reflections: ["", "", "", "", ""]
-            }
-          });
+          setPlanData(buildOfflinePlan(formData.lessonTitle, formData.learningArea, formData.gradeSection));
           setLoading(false);
-        }, 600);
+        }, 400);
       };
 
       const downloadDocx = () => {
@@ -259,7 +280,7 @@ Learner Context: ${formData.learnerContext}`;
             <style>
               body { font-family: Arial, sans-serif; font-size: 9pt; }
               table { border-collapse: collapse; width: 100%; margin-top: 10px; }
-              td, th { border: 1px solid #000000; padding: 6px; font-size: 9pt; vertical-align: top; }
+              td, th { border: 1px solid #000000; padding: 6px; font-size: 9pt; vertical-align: top; white-space: pre-line; }
               .bg-header { background-color: #E2E8F0; font-weight: bold; }
               .bg-sub { background-color: #F1F5F9; font-weight: bold; }
               h2 { text-align: center; font-size: 14pt; font-weight: bold; margin-bottom: 2px; }
@@ -303,7 +324,7 @@ Learner Context: ${formData.learnerContext}`;
           </header>
 
           <main className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 p-6 max-w-[1700px] mx-auto w-full">
-            {/* Left Sidebar Input Form */}
+            {/* Input Form Controls */}
             <div className="lg:col-span-4 bg-white rounded-xl shadow-md border border-slate-200 p-5 space-y-4 no-print h-fit">
               <h2 className="text-lg font-bold text-slate-800 border-b pb-2">Lesson Inputs</h2>
               
@@ -355,10 +376,10 @@ Learner Context: ${formData.learnerContext}`;
                   onChange={handleApiKeyChange} 
                   className="w-full text-xs p-2 bg-slate-50 border rounded outline-none focus:ring-1 focus:ring-blue-500" 
                 />
-                <p className="text-[10px] text-slate-500 mt-1">Leave blank to use the dynamic offline generator.</p>
+                <p className="text-[10px] text-slate-500 mt-1">Leave blank to use the universal offline generator.</p>
               </div>
 
-              {/* Action Buttons Row */}
+              {/* Action Buttons */}
               <div className="flex gap-2 pt-2">
                 <button 
                   onClick={generatePlan} 
@@ -378,7 +399,7 @@ Learner Context: ${formData.learnerContext}`;
               </div>
             </div>
 
-            {/* Right Document Workspace Preview */}
+            {/* Document Preview Panel */}
             <div className="lg:col-span-8 flex flex-col print-full-width">
               <div className="bg-white p-4 rounded-t-xl border border-b-0 flex justify-between items-center no-print">
                 <span className="font-bold text-slate-800">ILAW Table Preview</span>
@@ -417,12 +438,12 @@ Learner Context: ${formData.learnerContext}`;
 
                       <tr className="bg-slate-200 font-bold text-center">
                         <td className="border border-slate-800 p-2 bg-sub">Component</td>
-                        {(planData?.sessions || ["Session 1", "Session 2", "Session 3", "Session 4", "Session 5"]).map((s, i) => <td key={i} className="border border-slate-800 p-2 bg-sub">{s}</td>)}
+                        {planData.sessions.map((s, i) => <td key={i} className="border border-slate-800 p-2 bg-sub">{s}</td>)}
                       </tr>
 
                       <tr>
                         <td className="border border-slate-800 font-bold p-2 bg-slate-50">Learning Objectives</td>
-                        {(planData?.intentions?.learningObjectives || Array(5).fill("• Objective detail...")).map((item, i) => <td key={i} className="border border-slate-800 p-2 align-top">{item}</td>)}
+                        {planData.intentions.learningObjectives.map((item, i) => <td key={i} className="border border-slate-800 p-2 align-top whitespace-pre-line">{item}</td>)}
                       </tr>
 
                       <tr><td className="border border-slate-800 font-bold p-2 bg-slate-50">Learner Context</td><td className="border border-slate-800 p-2" colSpan="5">{formData.learnerContext}</td></tr>
@@ -430,35 +451,35 @@ Learner Context: ${formData.learnerContext}`;
                       <tr className="bg-slate-100"><td className="border border-slate-800 font-bold p-2 bg-header" colSpan="6">LEARNING EXPERIENCE.</td></tr>
                       <tr>
                         <td className="border border-slate-800 font-bold p-2 bg-slate-50">Pre-Lesson</td>
-                        {(planData?.learningExperience?.preLesson || Array(5).fill("Pre-lesson prompt...")).map((item, i) => <td key={i} className="border border-slate-800 p-2 align-top">{item}</td>)}
+                        {planData.learningExperience.preLesson.map((item, i) => <td key={i} className="border border-slate-800 p-2 align-top whitespace-pre-line">{item}</td>)}
                       </tr>
                       <tr>
                         <td className="border border-slate-800 font-bold p-2 bg-slate-50">Flow</td>
-                        {(planData?.learningExperience?.flow || Array(5).fill("Flow step...")).map((item, i) => <td key={i} className="border border-slate-800 p-2 align-top">{item}</td>)}
+                        {planData.learningExperience.flow.map((item, i) => <td key={i} className="border border-slate-800 p-2 align-top whitespace-pre-line">{item}</td>)}
                       </tr>
                       <tr>
                         <td className="border border-slate-800 font-bold p-2 bg-slate-50">Learning Resources</td>
-                        {(planData?.learningExperience?.learningResources || Array(5).fill("Resource items...")).map((item, i) => <td key={i} className="border border-slate-800 p-2 align-top">{item}</td>)}
+                        {planData.learningExperience.learningResources.map((item, i) => <td key={i} className="border border-slate-800 p-2 align-top whitespace-pre-line">{item}</td>)}
                       </tr>
                       <tr>
                         <td className="border border-slate-800 font-bold p-2 bg-slate-50">Integration</td>
-                        {(planData?.learningExperience?.opportunitiesForIntegration || Array(5).fill("Integration point...")).map((item, i) => <td key={i} className="border border-slate-800 p-2 align-top">{item}</td>)}
+                        {planData.learningExperience.opportunitiesForIntegration.map((item, i) => <td key={i} className="border border-slate-800 p-2 align-top whitespace-pre-line">{item}</td>)}
                       </tr>
 
                       <tr className="bg-slate-100"><td className="border border-slate-800 font-bold p-2 bg-header" colSpan="6">ASSESSMENT.</td></tr>
                       <tr>
                         <td className="border border-slate-800 font-bold p-2 bg-slate-50">Formative Assessment</td>
-                        {(planData?.assessment?.formativeAssessment || Array(5).fill("Formative task...")).map((item, i) => <td key={i} className="border border-slate-800 p-2 align-top">{item}</td>)}
+                        {planData.assessment.formativeAssessment.map((item, i) => <td key={i} className="border border-slate-800 p-2 align-top whitespace-pre-line font-mono text-[11px] bg-slate-50">{item}</td>)}
                       </tr>
 
                       <tr className="bg-slate-100"><td className="border border-slate-800 font-bold p-2 bg-header" colSpan="6">WAYS FORWARD.</td></tr>
                       <tr>
                         <td className="border border-slate-800 font-bold p-2 bg-slate-50">Extended Learning</td>
-                        {(planData?.waysForward?.extendedLearning || Array(5).fill("Extended task...")).map((item, i) => <td key={i} className="border border-slate-800 p-2 align-top">{item}</td>)}
+                        {planData.waysForward.extendedLearning.map((item, i) => <td key={i} className="border border-slate-800 p-2 align-top whitespace-pre-line">{item}</td>)}
                       </tr>
                       <tr>
                         <td className="border border-slate-800 font-bold p-2 bg-slate-50">Reflections</td>
-                        {(planData?.waysForward?.reflections || Array(5).fill("")).map((item, i) => <td key={i} className="border border-slate-800 p-2 h-12"></td>)}
+                        {planData.waysForward.reflections.map((item, i) => <td key={i} className="border border-slate-800 p-2 h-12"></td>)}
                       </tr>
                     </tbody>
                   </table>

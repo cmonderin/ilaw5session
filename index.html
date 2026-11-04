@@ -72,79 +72,121 @@
       learnerContext: 'The class consists of Grade 7 learners with diverse language backgrounds. Most respond well to interactive visual games, roleplay, and sentence-building drills.'
     };
 
-    // Deeply detailed offline template builder
+    // Helper for random choices
+    const pickRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+    // Endless Dynamic Offline Engine
     const buildOfflinePlan = (title, area, grade) => {
       const T = title?.trim() || "the Lesson Topic";
-      const S = area?.trim() || "the Subject";
+      const S = (area?.trim() || "").toLowerCase();
       const G = grade?.trim() || "the Class";
+      const runId = Math.floor(Math.random() * 9000) + 1000;
+
+      // Dynamic subtopic generator per session
+      const focusAreas = [
+        ["Fundamentals & Core Definitions", "Primary Characteristics", "Identification Skills"],
+        ["Structural Patterns & Rules", "Categorization Frameworks", "Standard Formatting"],
+        ["Guided Execution & Drills", "Error Analysis & Correction", "Collaborative Exercises"],
+        ["Practical Application Task", "Real-World Contextual Workshop", "Creative Construction"],
+        ["Summative Mastery Evaluation", "Performance Assessment", "Synthesis & Reflection"]
+      ];
+
+      const selectedSessions = focusAreas.map((fList, i) => `Session ${i + 1}: ${pickRandom(fList)} of ${T}`);
+
+      // Dynamic pre-lesson hooks
+      const hookStyles = [
+        `1. Visual Diagnostic (4 mins): Present 3 contrasting examples of ${T} on the board. Ask: "What structural patterns distinguish these examples?"\n2. Lesson Goal Briefing: Outline expected performance criteria.`,
+        `1. Interactive Charade / Roleplay (4 mins): Call 2 volunteers to demonstrate a concept scenario involving ${T}.\n2. Guided Inquiry: Connect demonstration to today's competency.`,
+        `1. Error Detection Challenge (4 mins): Display a text snippet containing 3 deliberate errors in ${T}. Ask: "Who can spot and correct the mistakes?"\n2. Review rules.`,
+        `1. Real-World Case Prompt (4 mins): Present a practical daily scenario in ${G} where ${T} is applied. Ask: "Why is accuracy critical in this context?"\n2. Group warm-up.`,
+        `1. Rapid Retrieval Quiz (4 mins): Conduct a 2-minute oral flashcard drill reviewing key terms of ${T}.\n2. Distribute activity materials.`
+      ];
+
+      // Dynamic flow strategies
+      const teachingStrategies = [
+        [
+          `1. Direct Instruction (15 mins): Teacher introduces core principles of ${T} using slides/board.\n2. Guided Drill (10 mins): Class underlines target elements in 5 sample problems.\n3. Paired Practice (15 mins): Complete Task Sheet A.\n4. Synthesis (5 mins): Summarize main rule.`,
+          `1. Inductive Exploration (15 mins): Learners analyze sample cards to deduce rules governing ${T}.\n2. Board Practice (10 mins): Student-led board work.\n3. Pair Work (15 mins): Classification exercise.\n4. Check (5 mins): Random call-outs.`,
+          `1. Guided Error Analysis (15 mins): Model correcting common pitfalls on the board.\n2. Group Task (20 mins): Teams of 4 resolve 5 complex scenario cards.\n3. Group Reporting (10 mins): Present solutions.`,
+          `1. Hands-on Workshop (25 mins): Independent drafting of an original output applying ${T}.\n2. Teacher Floor Walk (15 mins): Provide real-time corrective feedback.\n3. Peer Review (5 mins): Swap papers for rubric checking.`,
+          `1. Evaluation Execution (25 mins): Timed completion of the formal assessment.\n2. Guided Checking (15 mins): Review answer key.\n3. Reflection (5 mins): Complete self-assessment log.`
+        ],
+        [
+          `1. Concept Mapping (15 mins): Co-create a visual mind map of ${T} on the main board.\n2. Interactive Sorting (15 mins): Group challenge using color-coded cards.\n3. Synthesis (15 mins): Define key terms.`,
+          `1. Mini-Lecture (15 mins): Explain structural categories and standard formulas for ${T}.\n2. Guided Exercise (15 mins): Complete interactive workbook pages.\n3. Wrap-up (15 mins): Clarify misconceptions.`,
+          `1. Learning Stations (30 mins): Rotate through 3 focused activity tables (Station 1: Concept Check, Station 2: Application, Station 3: Troubleshooting).\n2. Debrief (15 mins): Review takeaways.`,
+          `1. Problem-Solving Workshop (30 mins): Create an authentic mini-project utilizing ${T}.\n2. Gallery Walk (15 mins): Peer review and constructive feedback.`,
+          `1. Summative Assessment (25 mins): Execute 5-item evaluation test.\n2. Class Debrief (20 mins): Analyze high-difficulty test items.`
+        ]
+      ];
+
+      // Endless quiz generation with randomized dynamic questions
+      const selectedFlow = pickRandom(teachingStrategies);
+      
+      const dynamicQuizzes = [
+        `EXPLICIT 5-ITEM IDENTIFICATION QUIZ (Set #${runId}):\n1. Define ${T} in your own words and state its main function.\n2. Identify the core element of ${T} in: "The team demonstrated exceptional skill."\n3. Which of the following represents correct usage of ${T}?\n   A) Option A [KEY]  B) Option B  C) Option C\n4. True or False: ${T} remains identical regardless of structural context.\n5. Write 1 original example illustrating ${T} in ${S}.`,
+        
+        `EXPLICIT 5-ITEM MULTIPLE CHOICE ASSESSMENT (Set #${runId}):\n1. What is the primary purpose of applying ${T} in sentence framing?\n   A) Primary Function [KEY]  B) Secondary Function  C) Distractor\n2. Select the correct form to complete the statement below.\n   A) Correct Form [KEY]  B) Alternate Form  C) Incorrect Form\n3. Identify the grammatical/technical error in Sample Sentence #${getRandomInt(1, 10)}.\n4. Which rule governs the proper application of ${T} in ${G}?\n5. Calculate/Determine the correct outcome based on rule #${getRandomInt(1, 5)}.`,
+
+        `EXPLICIT 5-ITEM ERROR CORRECTION DRILL (Set #${runId}):\nDirections: Rewrite each line below, correcting the underlined error in ${T}.\n1. "Incorrect application item 1 in context." -> Answer: Corrected form 1\n2. "Incorrect application item 2 in context." -> Answer: Corrected form 2\n3. "Incorrect application item 3 in context." -> Answer: Corrected form 3\n4. "Incorrect application item 4 in context." -> Answer: Corrected form 4\n5. "Incorrect application item 5 in context." -> Answer: Corrected form 5`,
+
+        `EXPLICIT 5-POINT PERFORMANCE EVALUATION RUBRIC (Set #${runId}):\n1. Technical Accuracy of ${T} (2 pts): All target elements implemented correctly.\n2. Structural Formatting (1 pt): Adheres to standard layout rules.\n3. Clarity & Alignment (1 pt): Directly addresses lesson competency.\n4. Timeliness (1 pt): Completed within allotted time limit.\nTotal Score: / 5 Points`,
+
+        `EXPLICIT 5-ITEM MASTERY EVALUATION TEST (Set #${runId}):\n1. State the fundamental rule governing ${T} in ${S}.\n2. Underline the target concept in the provided paragraph.\n3. Transform item #${getRandomInt(1, 5)} into its correct formal representation.\n4. Explain why sample B violates standard rules of ${T}.\n5. Construct a 2-sentence output demonstrating complete mastery.`
+      ];
 
       return {
-        sessions: [
-          `Session 1: Definition & Identification of ${T}`,
-          `Session 2: Classifications & Structural Rules of ${T}`,
-          `Session 3: Guided Sentence Construction & Analysis`,
-          `Session 4: Practical Workshop & Group Demonstration`,
-          `Session 5: Timed Performance Task & Mastery Assessment`
-        ],
+        sessions: selectedSessions,
         intentions: {
           learningObjectives: [
-            `• Define ${T} in your own words and identify them in 5 sample sentences.\n• List 3 distinct characteristics of ${T} in ${S}.`,
-            `• Differentiate regular vs. irregular structures of ${T}.\n• Formulate 5 correct examples adhering to standard rules.`,
-            `• Analyze 5 given sentences and correct errors in ${T} usage.\n• Collaborate with peers to create a 3-sentence narrative.`,
-            `• Construct a 1-page written output demonstrating proper application of ${T}.\n• Present output to class following visual and grammatical rubrics.`,
-            `• Complete a 5-item evaluation test on ${T} with 80% accuracy.\n• Self-assess performance using the standard DepEd checklist.`
+            `• Define ${T} and explain its core role in ${S}.\n• Identify ${T} in 5 varied sample problems for ${G}.`,
+            `• Differentiate primary categories and structural rules of ${T}.\n• Formulate 5 correct examples following standard guidelines.`,
+            `• Analyze 5 given examples and correct errors in ${T} execution.\n• Collaborate with peers to solve a multi-step task.`,
+            `• Construct an original 1-page output demonstrating ${T}.\n• Present output to class adhering to quality rubrics.`,
+            `• Complete a 5-item evaluation test on ${T} with 80% accuracy.\n• Log personal learning reflections and target areas.`
           ]
         },
         learningExperience: {
           preLesson: [
-            `1. Diagnostic Prompt (3 mins): Write 3 actions on the board (e.g., Run, Jump, Write). Ask: "What do these words have in common?"\n2. Hook: Show a short 2-minute video/picture showing people performing daily tasks. Ask: "Can a sentence exist without an action word?"`,
-            `1. Retrieval Drill (3 mins): Flashcards with 5 words from Session 1. Learners shout "ACTION" or "NOT ACTION".\n2. Scenario Prompt: "Imagine telling a friend how to cook rice without using any action words. Is it possible?"`,
-            `1. Error Detection Warm-up (4 mins): Display on board: "She run to school yesterday." Ask: "What feels incorrect about this sentence and how do we fix it?"\n2. Group Check: Assign safety and materials officers per group.`,
-            `1. Workshop Briefing (5 mins): Distribute Task Sheet 4. Read instructions aloud: "Each group will draft a 5-step instructional guide using active ${T}."\n2. Materials distribution and role assignment.`,
-            `1. Quiet Review (5 mins): Allow learners 5 minutes to review their quick-reference summary sheets.\n2. Distribute Evaluation Sheet and clarify test rules.`
+            pickRandom(hookStyles),
+            pickRandom(hookStyles),
+            `1. Diagnostic Warm-up (4 mins): Display 2 sample problems on board. Ask learners to spot differences.\n2. Review previous session concepts.`,
+            `1. Scenario Briefing (5 mins): Distribute Task Sheet 4. Review rubrics and group roles.\n2. Check workstation materials.`,
+            `1. Quiet Review (5 mins): Allow 5 minutes for peer study using summary cheat sheets.\n2. Distribute assessment forms.`
           ],
-          flow: [
-            `1. Direct Instruction (15 mins): Teacher presents definition, types, and examples of ${T} using slides/board.\n2. Board Drill (10 mins): Call 5 learners to underline ${T} in sample sentences.\n3. Guided Activity (15 mins): In pairs, learners complete Worksheet 1 (Underlining target words).\n4. Synthesis (5 mins): Teacher summarizes core rule: "${T} expresses action or state of being."`,
-            `1. Interactive Mini-Lecture (15 mins): Teacher explains structural rules and classifications of ${T}.\n2. Board Practice (10 mins): Transform regular items into irregular forms as a class.\n3. Pair Work (15 mins): Learners complete Classification Matrix Worksheet 2.\n4. Quick Check (5 mins): Random call-out for 3 student responses.`,
-            `1. Guided Analysis (15 mins): Teacher models step-by-step sentence correction on board.\n2. Collaborative Group Task (20 mins): Groups of 4 receive 5 jumbled or incorrect sentence cards to correct and arrange into a coherent paragraph.\n3. Group Reporting (10 mins): Representatives read corrected outputs.`,
-            `1. Hands-on Execution (25 mins): Learners independently construct an original 1-page composition/output applying ${T}.\n2. Teacher Monitoring (15 mins): Teacher conducts floor walks, providing immediate corrective feedback.\n3. Peer Exchange (5 mins): Swap papers for initial peer review.`,
-            `1. Test Execution (25 mins): Learners independently complete the 5-item summative assessment.\n2. Submission & Checking (15 mins): Exchange papers for guided class correction.\n3. Debriefing & Reflection (5 mins): Teacher highlights common correct items and areas for improvement.`
-          ],
+          flow: selectedFlow,
           learningResources: [
-            `• ${S} Curriculum Guide (p. 45-48)\n• Printed Worksheet 1: Word Identification\n• Visual Concept Poster on ${T}\n• Whiteboard & Markers`,
-            `• Reference Textbook Chapter 3\n• Printed Worksheet 2: Classification Matrix\n• Flashcards (20 vocabulary items)\n• Manila Paper`,
-            `• Sentence Correction Task Cards (Set A & B)\n• Group Activity Envelopes\n• Chart Paper & Markers\n• Scoring Rubric Sheet`,
-            `• Practical Workshop Task Sheet 4\n• Standard Composition Sheets\n• Output Evaluation Rubric\n• Highlighters`,
-            `• Printed 5-Item Assessment Test Sheets\n• Answer Key Overlay\n• Student Self-Reflection Logs\n• DepEd Grading Sheet`
+            `• ${S} Curriculum Guide\n• Printed Concept Worksheet 1\n• Presentation Slides / Poster\n• Whiteboard & Markers`,
+            `• Reference Textbook Chapter ${getRandomInt(1, 6)}\n• Classification Matrix Sheet\n• Flashcard Deck\n• Chart Paper`,
+            `• Task Correction Cards\n• Activity Envelopes\n• Group Rubric Sheet\n• Markers`,
+            `• Practical Workshop Task Sheet 4\n• Output Construction Paper\n• Evaluation Rubric\n• Highlighters`,
+            `• Printed 5-Item Assessment Test\n• Answer Key Overlay\n• Student Reflection Logs\n• DepEd Grading Sheet`
           ],
           opportunitiesForIntegration: [
-            `• Language Arts: Enhancing sentence clarity and grammatical precision.\n• Values Education: Active listening and respectful collaboration during paired drills.`,
-            `• Critical Thinking: Categorizing terms logically based on structural patterns.\n• Mathematics: Counting structural rules and calculating accuracy percentages.`,
-            `• Communication Skills: Articulating thought processes clearly during group reporting.\n• Peer Mentoring: Stronger learners supporting group mates during analysis.`,
-            `• Workplace Readiness: Producing clean, professional written outputs adhering to guidelines.\n• Time Management: Completing independent writing within allotted 25 minutes.`,
-            `• Personal Integrity: Maintaining honesty and independence during formal evaluation.\n• Self-Regulation: Reflecting on personal learning gaps and areas to review.`
+            `• Communication Skills: Expressing ideas clearly during discussions.\n• Values: Respectful collaboration during paired tasks.`,
+            `• Critical Thinking: Logical categorization based on structural rules.`,
+            `• Analytical Skills: Systematic error identification and troubleshooting.`,
+            `• Workplace Readiness: Producing neat, professional output on schedule.`,
+            `• Personal Integrity: Maintaining honesty during formal evaluations.`
           ]
         },
         assessment: {
           formativeAssessment: [
-            `EXPLICIT 5-ITEM IDENTIFICATION QUIZ:\nDirections: Read each sentence. Write the ${T} on your paper.\n1. "The diligent student writes her assignment every evening." -> Answer: writes\n2. "Filipino athletes compete proudly in international games." -> Answer: compete\n3. "Teachers prepare engaging lessons for their classes." -> Answer: prepare\n4. "Rain fell heavily across the province last night." -> Answer: fell\n5. "We celebrate our cultural heritage together." -> Answer: celebrate`,
-
-            `EXPLICIT 5-ITEM MULTIPLE CHOICE QUIZ:\n1. Which word expresses an action in: "The birds fly high"?\n   A) The  B) birds  C) fly [KEY]  D) high\n2. Select the correct form to complete: "She _____ to school yesterday."\n   A) walk  B) walked [KEY]  C) walking  D) walks\n3. Identify the state-of-being word: "They are very polite."\n   A) They  B) are [KEY]  C) very  D) polite\n4. Which sentence contains an action word?\n   A) Clear water  B) Blue sky  C) Students read books [KEY]  D) Green trees\n5. Choose the appropriate word: "The chef _____ a delicious meal."\n   A) cooks [KEY]  B) spoon  C) kitchen  D) plate`,
-
-            `EXPLICIT 5-ITEM ERROR CORRECTION DRILL:\nDirections: Rewrite each sentence correcting the underlined error.\n1. "He play basketball every Saturday." -> Key: He plays basketball every Saturday.\n2. "They was happy about the results." -> Key: They were happy about the results.\n3. "She write a letter to her grandmother yesterday." -> Key: She wrote a letter to her grandmother yesterday.\n4. "The cat catch the mouse quickly." -> Key: The cat caught / catches the mouse quickly.\n5. "We is ready for the upcoming exam." -> Key: We are ready for the upcoming exam.`,
-
-            `EXPLICIT 5-POINT PERFORMANCE TASK RUBRIC:\nEvaluate student composition based on:\n1. Grammatical Accuracy of ${T} (2 pts): All target words used correctly.\n2. Sentence Structure (1 pt): Complete sentences with proper capitalization.\n3. Content Alignment (1 pt): Directly answers prompt topic.\n4. Timeliness (1 pt): Output submitted within allotted 25 minutes.\nTotal Score: / 5 Points`,
-
-            `EXPLICIT 5-ITEM SUMMATIVE EVALUATION:\n1. Define ${T} in 1 sentence. (Key: A word used to describe an action, state, or occurrence.)\n2. Underline the action word: "The dog barked loudly at strangers." (Key: barked)\n3. Change "sing" into past tense. (Key: sang)\n4. Fill in: "Farmers _____ crops to feed the nation." (Key: plant / grow)\n5. Write 1 original sentence using the word "study". (Key: Evaluated via rubric)`
+            dynamicQuizzes[0],
+            dynamicQuizzes[1],
+            dynamicQuizzes[2],
+            dynamicQuizzes[3],
+            dynamicQuizzes[4]
           ]
         },
         waysForward: {
           extendedLearning: [
-            `• Remediation Task: Provide Worksheet 1-B (5 guided fill-in-the-blank items with word bank) for learners scoring 2 below benchmark.\n• Enrichment Task: Write a 3-sentence diary entry about your morning routine, underlining all action words used.`,
-            `• Remediation Task: Peer mentoring session pairing proficient students with struggling peers during 10-minute break.\n• Enrichment Task: Find 5 action words in a news article and list their base forms.`,
-            `• Remediation Task: Teacher conducts a 10-minute small-group table guided review focusing on basic subject-verb alignment.\n• Enrichment Task: Draft a 5-line poem using at least 4 dynamic action words.`,
-            `• Remediation Task: Complete guided paragraph completion sheet with visual prompts.\n• Enrichment Task: Transform a passive story paragraph into active voice using vivid action words.`,
-            `• Remediation Task: Re-take targeted 3-item oral check during consultation hours.\n• Enrichment Task: Compile all corrected worksheets and reflection logs into an organized portfolio folder.`
+            `• Remediation: Complete guided fill-in-the-blank Worksheet 1-B.\n• Enrichment: Write 5 original examples demonstrating ${T}.`,
+            `• Remediation: Re-read Chapter rules and answer review questions 1-3.\n• Enrichment: Research real-world applications of ${T}.`,
+            `• Remediation: 10-minute teacher-guided small group table review.\n• Enrichment: Create a 1-page quick reference study card for ${T}.`,
+            `• Remediation: Complete guided output framework sheet.\n• Enrichment: Peer-edit another student's output to suggest improvements.`,
+            `• Remediation: Re-take targeted 3-item check during consultation hours.\n• Enrichment: Compile all checked work into subject portfolio.`
           ],
           reflections: ["", "", "", "", ""]
         }
@@ -153,8 +195,8 @@
 
     function App() {
       const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
+      const [hasGeneratedOnce, setHasGeneratedOnce] = useState(false);
       
-      // Initialize with populated data immediately
       const [planData, setPlanData] = useState(() => 
         buildOfflinePlan(DEFAULT_FORM_DATA.lessonTitle, DEFAULT_FORM_DATA.learningArea, DEFAULT_FORM_DATA.gradeSection)
       );
@@ -183,8 +225,9 @@
 
       const generatePlan = async () => {
         setLoading(true);
+        setHasGeneratedOnce(true);
 
-        // API Key Live Generation Mode
+        // API Key Live Mode (High variation entropy)
         if (userApiKey && userApiKey.trim() !== '') {
           try {
             const systemInstruction = `You are an expert DepEd Instructional Designer creating an official DepEd ILAW Lesson Plan (DepEd Order No. 3 s.2026).
@@ -220,7 +263,8 @@ Return ONLY raw JSON matching this format:
   }
 }`;
 
-            const userPrompt = `Generate a fully detailed, verbatim DepEd ILAW Lesson Plan for:
+            const uniqueToken = Date.now() + "_" + Math.floor(Math.random() * 999999);
+            const userPrompt = `Generate a brand NEW variation (Variation Token: ${uniqueToken}) for:
 Topic / Lesson Title: ${formData.lessonTitle}
 Subject/Learning Area: ${formData.learningArea}
 Teacher: ${formData.teacherName}
@@ -239,7 +283,7 @@ Learner Context: ${formData.learnerContext}`;
                 contents: [{ parts: [{ text: userPrompt }] }],
                 generationConfig: {
                   responseMimeType: "application/json",
-                  temperature: 0.2
+                  temperature: 0.85
                 }
               })
             });
@@ -261,7 +305,7 @@ Learner Context: ${formData.learnerContext}`;
           }
         }
 
-        // Detailed Offline Generator Mode
+        // Endless Offline Generator Mode
         setTimeout(() => {
           setPlanData(buildOfflinePlan(formData.lessonTitle, formData.learningArea, formData.gradeSection));
           setLoading(false);
@@ -386,7 +430,7 @@ Learner Context: ${formData.learnerContext}`;
                   disabled={loading} 
                   className="flex-1 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg shadow transition flex items-center justify-center gap-1.5 text-xs sm:text-sm"
                 >
-                  {loading ? "Generating..." : "⚡ GENERATE ILAW LESSON PLAN"}
+                  {loading ? "Generating..." : (hasGeneratedOnce ? "⚡ GENERATE VARIATION" : "⚡ GENERATE ILAW LESSON PLAN")}
                 </button>
                 <button 
                   onClick={handleRefresh} 
@@ -469,7 +513,7 @@ Learner Context: ${formData.learnerContext}`;
                       <tr className="bg-slate-100"><td className="border border-slate-800 font-bold p-2 bg-header" colSpan="6">ASSESSMENT.</td></tr>
                       <tr>
                         <td className="border border-slate-800 font-bold p-2 bg-slate-50">Formative Assessment</td>
-                        {planData.assessment.formativeAssessment.map((item, i) => <td key={i} className="border border-slate-800 p-2 align-top whitespace-pre-line text-xs">{item}</td>)}
+                        {planData.assessment.formativeAssessment.map((item, i) => <td key={i} className="border border-slate-800 p-2 align-top whitespace-pre-line text-xs bg-slate-50">{item}</td>)}
                       </tr>
 
                       <tr className="bg-slate-100"><td className="border border-slate-800 font-bold p-2 bg-header" colSpan="6">WAYS FORWARD.</td></tr>

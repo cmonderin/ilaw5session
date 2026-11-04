@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DepEd ILAW Lesson Plan Generator (Detailed 4As Approach)</title>
+  <title>DepEd ILAW Lesson Plan Generator (Detailed Framework)</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -106,7 +106,7 @@
       return `${pickRandom(questions)} ${pickRandom(subjects).item}? Edi ${pickRandom(subjects).pun}`;
     };
 
-    // Dynamic Detailed Offline Generator Engine
+    // Dynamic Multi-Session Detailed Offline Generation Engine
     const buildOfflinePlan = (title, area, grade, numSessionsText = "4 Sessions") => {
       const T = title?.trim() || "the Lesson Topic";
       const S = (area?.trim() || "").toLowerCase();
@@ -142,65 +142,41 @@
         `1. Authentic Case Prompt (4 mins): Present a scenario in ${G} where ${T} is applied. Ask: "Why does precision matter here?"\n2. Group warm-up.`
       ];
 
-      // Highly Detailed 4As Flow Generator Pools
-      const detailedActivities = [
-        (sNum) => `1. Group Card Sorting Challenge (10 mins):\n• Divide the class into 4 teams. Distribute 6 envelope cards containing scenario cards related to ${T}.\n• Task: Learners evaluate and arrange cards under correct headings on the board within 7 minutes.\n• Teacher Walkthrough: Check team collaboration and assist groups encountering difficulty.`,
-        
-        (sNum) => `1. Interactive Roleplay & Concept Map (10 mins):\n• Call 4 volunteers to act out scenario prompts involving ${T}.\n• Non-acting students log key observations on graphic organizer sheets.\n• Teams post their completed observation logs on the main wall for class viewing.`,
-        
-        (sNum) => `1. Diagnostic Error-Hunting Workshop (10 mins):\n• Project a 5-sentence paragraph containing intentional mistakes in ${T}.\n• Student pairs highlight suspected errors using color-coded highlighters on printed activity sheets.\n• First 3 pairs to finish pin their corrected sheets on the board.`,
-        
-        (sNum) => `1. Station-Based Case Exploration (10 mins):\n• Set up 3 learning stations across the room with sample outputs featuring ${T}.\n• Student groups rotate every 3 minutes to inspect materials and answer prompt cards.\n• Groups assemble findings into a 3-bullet summary poster.`,
-        
-        (sNum) => `1. Cut-and-Paste Structural Assembly (10 mins):\n• Distribute envelope packets containing mixed formula fragments of ${T}.\n• Groups assemble fragments into complete, structurally accurate representations.\n• Teacher verifies layout accuracy across all team tables.`
-      ];
-
-      const detailedAnalyses = [
-        (sNum) => `2. Guided Inquiry & Pattern Discovery (10 mins):\n• Teacher Ask: "What common structural features did you observe among the correct cards in Category A?"\n• Student Response: Representatives explain their group's sorting rationale.\n• Deep-Dive Question: "Why does changing element X alter the overall meaning of ${T}?"\n• Board Work: Teacher highlights key keywords identified by students.`,
-        
-        (sNum) => `2. Comparative Case Breakdown (10 mins):\n• Teacher projects side-by-side comparison of correct vs. incorrect applications of ${T}.\n• Guided Questions: "What specific rule was violated in Sample 2? How does it impact accuracy in ${S}?"\n• Student Discussion: Learners evaluate peer outputs and formulate corrective statements.`,
-        
-        (sNum) => `2. Peer Troubleshooting Session (10 mins):\n• Teacher calls on 2 group leaders to share conflicting answers from the diagnostic activity.\n• Facilitated Debate: Class determines which representation follows standard rules of ${T}.\n• Teacher Key Takeaway: Emphasize the core underlying rule governing ${T}.`,
-        
-        (sNum) => `2. Station Findings Synthesis (10 mins):\n• Teacher compiles responses from all 3 stations on the main grid.\n• Probe Question: "How do these station findings connect directly to our lesson competency for Grade ${G}?"\n• Learners refine their initial hypotheses based on teacher feedback.`
-      ];
-
-      const detailedAbstractions = [
-        (sNum) => `3. Direct Mini-Lecture & Board Modeling (15 mins):\n• Teacher Explanation: Present explicit definitions, key formulas, and structural rules of ${T}.\n• Step-by-Step Board Work: Model solving/constructing 3 complex examples on the board, demonstrating proper sequence and syntax.\n• Misconception Alert: Highlight top 2 student pitfalls in ${S} and demonstrate instant correction strategies.\n• Student Action: Learners copy master notes and formula summary into their notebooks.`,
-        
-        (sNum) => `3. Concept Structuring & Golden Rules (15 mins):\n• Teacher Explanation: Synthesize student findings into a master mind-map for ${T}.\n• Rule Formulation: Class establishes 3 "Golden Rules" for accurate application of ${T} in Grade ${G}.\n• Exemplar Breakdown: Walk through a high-scoring sample output and explain rubric alignment.\n• Q&A Segment: Clarify student doubts prior to independent practice.`,
-        
-        (sNum) => `3. Interactive Demonstration & Cheat-Sheet Discussion (15 mins):\n• Distribute a 1-page quick reference summary on ${T}.\n• Teacher Walkthrough: Unpack core concepts item-by-item with active student participation.\n• Board Drill: Call 3 random students to execute sample board tasks following teacher's step-by-step guide.`,
-        
-        (sNum) => `3. Structural Deep-Dive & Rule Mapping (15 mins):\n• Teacher delivers structured slides illustrating advance applications of ${T}.\n• Key Takeaways: Detail specific conditions, exceptions, and formatting standards.\n• Guided Summary: Students complete a fill-in-the-blank concept map to lock in understanding.`
-      ];
-
-      const detailedApplications = [
-        (sNum) => `4. Paired Construction Task Sheet ${sNum} (10 mins):\n• Distribute Task Sheet ${sNum}. Student pairs construct 5 original sentences/problems applying ${T}.\n• Floor Walk: Teacher circulates to provide immediate corrective feedback.\n• Peer Check: Pairs swap papers with adjacent groups for rubric-based scoring.`,
-        
-        (sNum) => `4. Individual Performance Workshop (10 mins):\n• Learners independently construct a short 5-item output utilizing ${T} correctly.\n• Rubric Scoring: Outputs evaluated on Accuracy (2 pts), Formatting (2 pts), and Neatness (1 pt).\n• Random Call-out: 3 students read/present outputs aloud for immediate teacher validation.`,
-        
-        (sNum) => `4. Authentic Real-World Transfer Activity (10 mins):\n• Prompt: "Write a brief 4-sentence scenario in Grade ${G} context where ${T} is applied correctly."\n• Group Verification: Peer review in trios using a 3-point checklist.\n• Portfolio Deposit: Checked outputs filed into subject learning folders.`,
-        
-        (sNum) => `4. Timed Sentence-Building / Problem Drill (10 mins):\n• Execute a 5-minute timed drill sheet with 5 targeted items on ${T}.\n• Self-Correction: Display answer key overlay for student self-checking and score logging.`
-      ];
-
+      // Highly Detailed 4As Flow Generator
       const generate4AFlow = (i) => {
         const sNum = i + 1;
-        const act = pickRandom(detailedActivities)(sNum);
-        const ana = pickRandom(detailedAnalyses)(sNum);
-        const abs = pickRandom(detailedAbstractions)(sNum);
-        const app = pickRandom(detailedApplications)(sNum);
-
-        return `${act}\n\n${ana}\n\n${abs}\n\n${app}`;
+        return `1. ACTIVITY (10 mins):\n• Group Card Sorting Challenge: Divide class into 4 teams. Distribute 6 scenario cards involving ${T}.\n• Task: Teams arrange cards under proper headings on the board within 7 minutes.\n• Teacher Supervision: Circulate and verify group participation.\n\n` +
+               `2. ANALYSIS (10 mins):\n• Guided Inquiry: Ask "What common patterns did you notice across Category A?"\n• Comparative Debrief: Discuss why changing elements alters the meaning of ${T}.\n• Board Summary: Highlight key keywords identified by students.\n\n` +
+               `3. ABSTRACTION (15 mins):\n• Direct Mini-Lecture: Present explicit definitions, key formulas, and rules of ${T}.\n• Board Modeling: Teacher models solving/constructing 3 sample items step-by-step.\n• Misconception Alert: Highlight top 2 student pitfalls and demonstrate correction strategies.\n\n` +
+               `4. APPLICATION (10 mins):\n• Paired Task Sheet ${sNum}: Student pairs construct 5 original examples of ${T}.\n• Peer Checking: Pairs swap papers with adjacent groups for rubric-based scoring.`;
       };
 
-      const quizPool = [
-        `EXPLICIT 5-ITEM IDENTIFICATION QUIZ (Set #${runId}):\n1. Define ${T} in your own words.\n2. Identify core element in sample 1.\n3. Select correct usage: A) Option A [KEY] B) Option B\n4. True or False: ${T} is context dependent.\n5. Write 1 example of ${T}.`,
-        `EXPLICIT 5-ITEM MULTIPLE CHOICE ASSESSMENT (Set #${runId}):\n1. Primary purpose of ${T}?\n   A) Primary [KEY] B) Secondary\n2. Complete statement: A) Form A [KEY] B) Form B\n3. Identify error in sentence #${getRandomInt(1, 5)}.\n4. Rule governing ${T}?\n5. Determine correct outcome.`,
-        `EXPLICIT 5-ITEM ERROR CORRECTION DRILL (Set #${runId}):\n1. Rewrite item 1 -> Key: Corrected 1\n2. Rewrite item 2 -> Key: Corrected 2\n3. Rewrite item 3 -> Key: Corrected 3\n4. Rewrite item 4 -> Key: Corrected 4\n5. Rewrite item 5 -> Key: Corrected 5`,
-        `EXPLICIT 5-POINT PERFORMANCE TASK RUBRIC (Set #${runId}):\n1. Accuracy of ${T} (2 pts)\n2. Formatting & Syntax (1 pt)\n3. Content Alignment (1 pt)\n4. Timeliness (1 pt)`,
-        `EXPLICIT 5-ITEM SUMMATIVE MASTERY CHECK (Set #${runId}):\n1. State core rule of ${T}.\n2. Underline target word in text.\n3. Transform item to formal representation.\n4. Explain error in sample B.\n5. Construct 2-sentence output.`
+      // Highly Detailed Integration Generator Pool
+      const integrationPool = [
+        `• DepEd Core Value Integration: Maka-Tao - Cultivates respect and active listening during collaborative pair work.\n• Cross-Curricular Link: Values Education (EsP) - Connects accuracy in ${T} to taking responsibility for clear communication.\n• 21st Century Skills: Critical Thinking & Collaboration through group sorting and peer-feedback activities.`,
+        `• DepEd Core Value Integration: Makabansa - Highlights local national contexts in sample sentences/scenarios of ${T}.\n• Cross-Curricular Link: Araling Panlipunan - Integrates historical/community examples into classroom exercises.\n• 21st Century Skills: Effective Communication & Media Literacy when analyzing contextual statements.`,
+        `• DepEd Core Value Integration: Maka-Diyos - Promotes honesty, academic integrity, and diligence during independent tasks.\n• Cross-Curricular Link: Science & Mathematics - Applies systematic classification and logical sequence to ${T}.\n• 21st Century Skills: Problem Solving & Analytical Reasoning through error-detection drills.`,
+        `• DepEd Core Value Integration: Makakalikasan - Incorporates environmental awareness prompts in workshop practice.\n• Cross-Curricular Link: Health & PE - Uses active movement and physical roleplay prompts to demonstrate ${T}.\n• 21st Century Skills: Creative Innovation & Adaptability in constructing original outputs.`
+      ];
+
+      // Highly Detailed Formative Assessment Generator Pool (With Complete Items & Keys)
+      const formativeAssessmentPool = [
+        `EXPLICIT 5-ITEM IDENTIFICATION QUIZ (Set #${runId}):\nInstructions: Identify the target element of ${T} in each statement.\n1. "The diligent student reviews her notes daily." -> Key: reviews\n2. "They constructed a sturdy model bridge." -> Key: constructed\n3. "The sun shines brightly over the field." -> Key: shines\n4. "Teachers inspire young minds every day." -> Key: inspire\n5. "We organized a successful campus clean-up." -> Key: organized\n\nScoring: 1 point per correct answer (Total: 5 points).`,
+
+        `EXPLICIT 5-ITEM MULTIPLE CHOICE ASSESSMENT (Set #${runId}):\nInstructions: Choose the letter of the correct answer.\n1. Which of the following best defines ${T}?\n   A) A describing word  B) An action or state word [KEY]  C) A joining word\n2. Select the correct form to complete: "She _____ her project yesterday."\n   A) finish  B) finished [KEY]  C) finishing\n3. Identify the error in: "The team execute their plan perfectly."\n   A) team  B) execute [KEY]  C) plan\n4. What rule governs agreement in ${T}?\n   A) Subject-Verb Agreement [KEY]  B) Tense Shift  C) Pronoun Case\n5. Choose the correctly structured sentence:\n   A) "They sings well."  B) "They sing well." [KEY]  C) "They singing well."`,
+
+        `EXPLICIT 5-ITEM ERROR CORRECTION DRILL (Set #${runId}):\nInstructions: Rewrite each sentence to correct the underlined mistake in ${T}.\n1. "He run fast during morning practice." -> Key: He runs fast...\n2. "The children was playing near the park." -> Key: The children were playing...\n3. "She write a meaningful essay about nature." -> Key: She wrote / writes...\n4. "We has completed all required tasks." -> Key: We have completed...\n5. "The bell ring at exactly 7:00 AM." -> Key: The bell rings / rang...`,
+
+        `EXPLICIT 5-POINT PERFORMANCE RUBRIC (Set #${runId}):\nTask: Construct 5 original sentences applying rules of ${T}.\n• Criteria 1: Grammatical Accuracy & Syntax (2 pts)\n  - 2 pts: Zero structural errors in target subject.\n  - 1 pt: Minor error, meaning remains clear.\n• Criteria 2: Content Relevance & Context (2 pts)\n  - 2 pts: All items directly apply ${T} in Grade ${G} context.\n  - 1 pt: Partial application.\n• Criteria 3: Mechanics & Timeliness (1 pt)\n  - 1 pt: Submitted on time with proper punctuation.`
+      ];
+
+      // Highly Detailed Ways Forward Generator Pool
+      const extendedLearningPool = [
+        `• REMEDIATION (Struggling Learners):\n  - Provide Guided Fill-in-the-Blank Worksheet 1-B with word bank.\n  - Conduct a 10-minute teacher-led small-group table review focused on core rules.\n  - Pair student with a designated peer-tutor for 5 practice items.\n\n• ENRICHMENT (Advanced Learners):\n  - Challenge students to write a 5-sentence descriptive paragraph utilizing advanced variations of ${T}.\n  - Assign student as "Peer-Checker Captain" to assist group checking.`,
+
+        `• REMEDIATION (Struggling Learners):\n  - Assign Re-reading of Module Reference pages with highlighted rule summaries.\n  - Provide 3 simplified matching cards for mandatory consultation hour review.\n\n• ENRICHMENT (Advanced Learners):\n  - Task learners to compose an original slogan or poster caption applying ${T} in community context.\n  - Research 3 real-world professional uses of ${T}.`,
+
+        `• REMEDIATION (Struggling Learners):\n  - Execute a targeted 3-item oral re-check during independent study period.\n  - Supply flashcards containing color-coded clues for subject-verb agreement.\n\n• ENRICHMENT (Advanced Learners):\n  - Create a 1-page mini study guide or graphic organizer summarizing ${T} for classmates.\n  - Draft 3 diagnostic quiz items with answer explanations.`
       ];
 
       return {
@@ -214,17 +190,13 @@
           learningResources: Array.from({ length: count }, (_, i) => 
             `• ${S} Curriculum Guide\n• Printed 4As Activity Cards ${i + 1}\n• Task Sheet & Board Markers`
           ),
-          opportunitiesForIntegration: Array.from({ length: count }, () => 
-            `• Communication Skills: Expressing ideas clearly during Analysis.\n• Critical Thinking: Deductive reasoning during Activity.`
-          )
+          opportunitiesForIntegration: Array.from({ length: count }, (_, i) => integrationPool[i % integrationPool.length])
         },
         assessment: {
-          formativeAssessment: Array.from({ length: count }, (_, i) => quizPool[i % quizPool.length])
+          formativeAssessment: Array.from({ length: count }, (_, i) => formativeAssessmentPool[i % formativeAssessmentPool.length])
         },
         waysForward: {
-          extendedLearning: Array.from({ length: count }, (_, i) => 
-            `• Remediation: Guided 4As Reinforcement Sheet ${i + 1}-B.\n• Enrichment: Advanced application challenge.`
-          ),
+          extendedLearning: Array.from({ length: count }, (_, i) => extendedLearningPool[i % extendedLearningPool.length]),
           reflections: Array.from({ length: count }, () => "")
         }
       };
@@ -309,18 +281,17 @@
         if (userApiKey && userApiKey.trim() !== '') {
           try {
             const systemInstruction = `You are an expert DepEd Instructional Designer creating an official DepEd ILAW Lesson Plan (DepEd Order No. 3 s.2026).
-CRITICAL REQUIREMENTS FOR FLOW:
+CRITICAL REQUIREMENTS FOR DETAILED SECTIONS:
 - Output EXACTLY ${count} SESSIONS in JSON format.
-- In "flow", use the STRICT 4As TEACHING APPROACH for EVERY session with EXTREMELY DETAILED, STEP-BY-STEP instructions (including minute allocations, exact teacher prompts, student activities, and board directions).
-  • 1. ACTIVITY (10 mins): [Explicit step-by-step group/pair diagnostic activity tailored to ${formData.lessonTitle}]
-  • 2. ANALYSIS (10 mins): [Verbatim teacher questioning & student discovery breakdown tailored to ${formData.lessonTitle}]
-  • 3. ABSTRACTION (15 mins): [Detailed mini-lecture, explicit definitions, rules, formulas & board modeling for ${formData.lessonTitle}]
-  • 4. APPLICATION (10 mins): [Concrete student task sheet, problem-solving, or rubric-evaluated performance task]
-- In "learningObjectives", EVERY SINGLE session objective MUST be explicitly categorized into 3 distinct KSA domains:
-  • Knowledge: [Cognitive domain objective]
-  • Skills: [Psychomotor domain objective]
-  • Attitude: [Affective domain objective]
-- In "formativeAssessment", write VERBATIM 5-item test questionnaires with Answer Keys for each of the ${count} sessions.
+- In "opportunitiesForIntegration", include EXPLICIT:
+  • DepEd Core Values (Maka-Diyos, Maka-Tao, Makakalikasan, Makabansa)
+  • Cross-Curricular Connections (Subject links like EsP, AP, Science, Math)
+  • 21st Century Skills (Critical Thinking, Collaboration, Communication)
+- In "formativeAssessment", write VERBATIM 5-ITEM QUIZZES WITH COMPLETE ANSWER KEYS or DETAILED 5-POINT RUBRICS for EACH of the ${count} sessions.
+- In "waysForward" -> "extendedLearning", provide DETAILED STEP-BY-STEP strategies for BOTH:
+  • REMEDIATION (Struggling Learners: guided sheets, peer tutoring, small group review)
+  • ENRICHMENT (Advanced Learners: creative prompts, peer checker roles, real-world tasks)
+- In "flow", use the STRICT 4As TEACHING APPROACH for EVERY session with DETAILED STEP-BY-STEP instructions.
 
 Return ONLY raw JSON matching this format:
 {
@@ -330,21 +301,21 @@ Return ONLY raw JSON matching this format:
   },
   "learningExperience": {
     "preLesson": [${Array.from({ length: count }, (_, i) => `"Hook ${i + 1}"`).join(", ")}],
-    "flow": [${Array.from({ length: count }, () => `"1. ACTIVITY (10 mins): [Detailed activity step-by-step]\\n\\n2. ANALYSIS (10 mins): [Detailed analysis questions & prompts]\\n\\n3. ABSTRACTION (15 mins): [Detailed lecture & rules summary]\\n\\n4. APPLICATION (10 mins): [Detailed task sheet & application drill]"`).join(", ")}],
+    "flow": [${Array.from({ length: count }, () => `"1. ACTIVITY (10 mins): [Detailed activity]\\n\\n2. ANALYSIS (10 mins): [Detailed questions]\\n\\n3. ABSTRACTION (15 mins): [Detailed lecture]\\n\\n4. APPLICATION (10 mins): [Detailed task]"`).join(", ")}],
     "learningResources": [${Array.from({ length: count }, (_, i) => `"Res ${i + 1}"`).join(", ")}],
-    "opportunitiesForIntegration": [${Array.from({ length: count }, (_, i) => `"Integ ${i + 1}"`).join(", ")}]
+    "opportunitiesForIntegration": [${Array.from({ length: count }, () => `"• DepEd Core Value Integration: [Value link]\\n• Cross-Curricular Link: [Subject link]\\n• 21st Century Skills: [Skill link]"`).join(", ")}]
   },
   "assessment": {
-    "formativeAssessment": [${Array.from({ length: count }, (_, i) => `"Quiz ${i + 1} + Key"`).join(", ")}]
+    "formativeAssessment": [${Array.from({ length: count }, () => `"EXPLICIT 5-ITEM QUIZ:\\n1. [Item 1] -> Key: [Ans]\\n2. [Item 2] -> Key: [Ans]\\n3. [Item 3] -> Key: [Ans]\\n4. [Item 4] -> Key: [Ans]\\n5. [Item 5] -> Key: [Ans]"`).join(", ")}]
   },
   "waysForward": {
-    "extendedLearning": [${Array.from({ length: count }, (_, i) => `"Ext ${i + 1}"`).join(", ")}],
+    "extendedLearning": [${Array.from({ length: count }, () => `"• REMEDIATION (Struggling Learners): [Detailed steps]\\n\\n• ENRICHMENT (Advanced Learners): [Detailed tasks]"`).join(", ")}],
     "reflections": [${Array.from({ length: count }, () => `""`).join(", ")}]
   }
 }`;
 
             const uniqueToken = Date.now() + "_" + Math.floor(Math.random() * 999999);
-            const userPrompt = `Generate a brand NEW detailed 4As variation (Variation Token: ${uniqueToken}) for a ${formData.noOfSessions} DepEd ILAW Lesson Plan:
+            const userPrompt = `Generate a brand NEW highly detailed variation (Variation Token: ${uniqueToken}) for a ${formData.noOfSessions} DepEd ILAW Lesson Plan:
 Topic / Lesson Title: ${formData.lessonTitle}
 Subject/Learning Area: ${formData.learningArea}
 Teacher: ${formData.teacherName}
@@ -411,7 +382,7 @@ Learner Context: ${formData.learnerContext}`;
             </style>
           </head>
           <body>
-            <h2>LESSON PLAN TEMPLATE (OFFICIAL ILAW - 4As APPROACH)</h2>
+            <h2>LESSON PLAN TEMPLATE (OFFICIAL ILAW - DETAILED FRAMEWORK)</h2>
             <p class="subtitle">Department of Education - DepEd Order No. 3, s. 2026 Compliant Framework</p>
             ${tableElement.innerHTML}
           </body>
@@ -423,7 +394,7 @@ Learner Context: ${formData.learnerContext}`;
           margins: { top: 720, right: 720, bottom: 720, left: 720 }
         });
 
-        const filename = `${(formData.lessonTitle || 'Lesson_Plan').replace(/[^a-zA-Z0-9]/g, '_')}_ILAW_4As.docx`;
+        const filename = `${(formData.lessonTitle || 'Lesson_Plan').replace(/[^a-zA-Z0-9]/g, '_')}_ILAW_Detailed.docx`;
         saveAs(converted, filename);
       };
 
@@ -436,7 +407,7 @@ Learner Context: ${formData.learnerContext}`;
             <div className="flex items-center gap-3">
               <div className="bg-yellow-400 text-blue-950 font-black px-3 py-1 rounded tracking-wider text-xl">DepEd</div>
               <div>
-                <h1 className="text-xl font-bold">ILAW Lesson Plan Generator (4As Framework)</h1>
+                <h1 className="text-xl font-bold">ILAW Lesson Plan Generator (Detailed Framework)</h1>
                 <p className="text-xs text-blue-200">Official DepEd Order No. 3, s. 2026 Compliant Format</p>
               </div>
             </div>
@@ -548,7 +519,7 @@ Learner Context: ${formData.learnerContext}`;
                     disabled={loading} 
                     className="flex-1 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg shadow transition flex items-center justify-center gap-1.5 text-xs sm:text-sm"
                   >
-                    {loading ? "Generating..." : (hasGeneratedOnce ? "⚡ GENERATE VARIATION" : "⚡ GENERATE 4As LESSON PLAN")}
+                    {loading ? "Generating..." : (hasGeneratedOnce ? "⚡ GENERATE VARIATION" : "⚡ GENERATE DETAILED PLAN")}
                   </button>
                   <button 
                     onClick={handleRefresh} 
@@ -565,7 +536,7 @@ Learner Context: ${formData.learnerContext}`;
             {/* Document Preview Panel */}
             <div className="lg:col-span-8 flex flex-col print-full-width">
               <div className="bg-white p-4 rounded-t-xl border border-b-0 flex justify-between items-center no-print">
-                <span className="font-bold text-slate-800">ILAW Table Preview (Detailed 4As Approach - {sessionCount} {sessionCount === 1 ? 'Session' : 'Sessions'})</span>
+                <span className="font-bold text-slate-800">ILAW Table Preview (Detailed Framework - {sessionCount} {sessionCount === 1 ? 'Session' : 'Sessions'})</span>
                 <div className="flex gap-2">
                   <button onClick={downloadDocx} className="bg-blue-600 hover:bg-blue-700 text-white text-xs px-4 py-2 rounded font-medium shadow-sm transition flex items-center gap-1">
                     <span>📄</span> Download as .docx
@@ -625,19 +596,19 @@ Learner Context: ${formData.learnerContext}`;
                         {planData.learningExperience.learningResources.map((item, i) => <td key={i} className="border border-slate-800 p-2 align-top whitespace-pre-line">{item}</td>)}
                       </tr>
                       <tr>
-                        <td className="border border-slate-800 font-bold p-2 bg-slate-50">Integration</td>
+                        <td className="border border-slate-800 font-bold p-2 bg-slate-50">Integration (Values & Skills)</td>
                         {planData.learningExperience.opportunitiesForIntegration.map((item, i) => <td key={i} className="border border-slate-800 p-2 align-top whitespace-pre-line">{item}</td>)}
                       </tr>
 
                       <tr className="bg-slate-100"><td className="border border-slate-800 font-bold p-2 bg-header" colSpan={totalColSpan}>ASSESSMENT.</td></tr>
                       <tr>
-                        <td className="border border-slate-800 font-bold p-2 bg-slate-50">Formative Assessment</td>
+                        <td className="border border-slate-800 font-bold p-2 bg-slate-50">Formative Assessment (Test & Key)</td>
                         {planData.assessment.formativeAssessment.map((item, i) => <td key={i} className="border border-slate-800 p-2 align-top whitespace-pre-line text-xs bg-slate-50">{item}</td>)}
                       </tr>
 
                       <tr className="bg-slate-100"><td className="border border-slate-800 font-bold p-2 bg-header" colSpan={totalColSpan}>WAYS FORWARD.</td></tr>
                       <tr>
-                        <td className="border border-slate-800 font-bold p-2 bg-slate-50">Extended Learning</td>
+                        <td className="border border-slate-800 font-bold p-2 bg-slate-50">Extended Learning (Remediation & Enrichment)</td>
                         {planData.waysForward.extendedLearning.map((item, i) => <td key={i} className="border border-slate-800 p-2 align-top whitespace-pre-line">{item}</td>)}
                       </tr>
                       <tr>

@@ -56,7 +56,35 @@
   <div id="root"></div>
 
   <script type="text/babel">
-    const { useState } = React;
+    const { useState, useEffect } = React;
+
+    // 24 Tagalog Good Vibes One-Liners (Kusang nagpapalit kada oras)
+    const HOURLY_TAGALOG_JOKES = [
+      "00:00 - Ano ang paboritong subject ng mga sapatos? Edi SOLE-ID Math! 👟",
+      "01:00 - Bakit masaya ang kalendaryo? Kasi marami siyang DATES! 📅",
+      "02:00 - Ano ang tawag sa isdang walang gana? Edi TUNA-lay! 🐟",
+      "03:00 - Bakit umiiyak ang whiteboard marker? Kasi ramdam niyang nag-eEXPIRE na siya! 🖊️",
+      "04:00 - Ano ang paboritong gulay ng mga guro? Edi KALABA-SAY-TEACHER! 🎃",
+      "05:00 - Maagang gising si Teacher! Anong sabi ng kape sa mainit na tubig? 'Medyo napa-BOIL ako sa 'yo dahling!' ☕",
+      "06:00 - Bakit nagsuot ng baso ang lapis? Kasi gusto niyang maging SHARP! ✏️",
+      "07:00 - Anong ulam ang paborito ng mga computer? Edi MICRO-CHIPS! 🍟",
+      "08:00 - Good morning class! Ano ang tawag sa maingay na ibon? Edi CHIRP-erson! 🐦",
+      "09:00 - Bakit hindi nawawala ang mga calculator? Kasi lagi silang pwedeng COUNT-on! 🧮",
+      "10:00 - Recess Time! Anong sabi ng tinapay nung maapakan siya? 'Aray, BREAD-a!' 🍞",
+      "11:00 - Bakit laging relax ang mga geometry teacher? Kasi marami silang RIGHT ANGLES! 📐",
+      "12:00 - Lunch break! Anong paboritong sabaw ng mga programmer? Edi CODE-ro! 🍜",
+      "13:00 - Hapon na, wag antukin! Anong sabi ng zero sa number eight? 'Ganda ng belt mo ah!' 8️⃣",
+      "14:00 - Bakit matalino ang mga libro? Kasi marami silang PAGES of wisdom! 📚",
+      "15:00 - Class dismissed na ba? Bakit mabait ang compass? Kasi laging nasa RIGHT DIRECTION! 🧭",
+      "16:00 - Anong paboritong instrumento ng mga manok? Edi CHICKEN NUG-GETS! 🎸",
+      "17:00 - Pauwi na si Teacher! Bakit masaya ang bell? Kasi RING nang RING ang ligaya niya! 🔔",
+      "18:00 - Hapunan time! Anong sabi ng bigas nung ma-inlove? 'Ikaw ang KANIN-ang iniisip ko!' 🍚",
+      "19:00 - Pahinga muna! Ano ang paboritong kanta ng mga saging? 'Banana-na, Hey Hey, Goodbye!' 🍌",
+      "20:00 - Check ng test papers! Bakit hindi nag-aaway ang mga magnet? Kasi may ATTRACTION sila! 🧲",
+      "21:00 - Matutulog na dapat pero nag-lesson plan pa! Anong sabi ng bumbilya? 'I-LIGHT you so much!' 💡",
+      "22:00 - Bakit hindi nalulungkot ang mga cellphone? Kasi lagi silang may CHARGE! 🔋",
+      "23:00 - Tulog na Teacher, bukas uli! Anong sabi ng unan? 'I got your BACK (and head)!' 🛌"
+    ];
 
     const DEFAULT_FORM_DATA = {
       lessonTitle: 'Verbs (Action Words)',
@@ -72,18 +100,16 @@
       learnerContext: 'The class consists of Grade 7 learners with diverse language backgrounds. Most respond well to interactive visual games, roleplay, and sentence-building drills.'
     };
 
-    // Helper for random choices
     const pickRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
     const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
-    // Endless Dynamic Offline Engine
+    // Subject-Aware & Dynamic Offline Generation Engine
     const buildOfflinePlan = (title, area, grade) => {
       const T = title?.trim() || "the Lesson Topic";
       const S = (area?.trim() || "").toLowerCase();
       const G = grade?.trim() || "the Class";
       const runId = Math.floor(Math.random() * 9000) + 1000;
 
-      // Dynamic subtopic generator per session
       const focusAreas = [
         ["Fundamentals & Core Definitions", "Primary Characteristics", "Identification Skills"],
         ["Structural Patterns & Rules", "Categorization Frameworks", "Standard Formatting"],
@@ -94,16 +120,13 @@
 
       const selectedSessions = focusAreas.map((fList, i) => `Session ${i + 1}: ${pickRandom(fList)} of ${T}`);
 
-      // Dynamic pre-lesson hooks
       const hookStyles = [
         `1. Visual Diagnostic (4 mins): Present 3 contrasting examples of ${T} on the board. Ask: "What structural patterns distinguish these examples?"\n2. Lesson Goal Briefing: Outline expected performance criteria.`,
         `1. Interactive Charade / Roleplay (4 mins): Call 2 volunteers to demonstrate a concept scenario involving ${T}.\n2. Guided Inquiry: Connect demonstration to today's competency.`,
         `1. Error Detection Challenge (4 mins): Display a text snippet containing 3 deliberate errors in ${T}. Ask: "Who can spot and correct the mistakes?"\n2. Review rules.`,
-        `1. Real-World Case Prompt (4 mins): Present a practical daily scenario in ${G} where ${T} is applied. Ask: "Why is accuracy critical in this context?"\n2. Group warm-up.`,
-        `1. Rapid Retrieval Quiz (4 mins): Conduct a 2-minute oral flashcard drill reviewing key terms of ${T}.\n2. Distribute activity materials.`
+        `1. Real-World Case Prompt (4 mins): Present a practical daily scenario in ${G} where ${T} is applied. Ask: "Why is accuracy critical in this context?"\n2. Group warm-up.`
       ];
 
-      // Dynamic flow strategies
       const teachingStrategies = [
         [
           `1. Direct Instruction (15 mins): Teacher introduces core principles of ${T} using slides/board.\n2. Guided Drill (10 mins): Class underlines target elements in 5 sample problems.\n3. Paired Practice (15 mins): Complete Task Sheet A.\n4. Synthesis (5 mins): Summarize main rule.`,
@@ -114,14 +137,13 @@
         ],
         [
           `1. Concept Mapping (15 mins): Co-create a visual mind map of ${T} on the main board.\n2. Interactive Sorting (15 mins): Group challenge using color-coded cards.\n3. Synthesis (15 mins): Define key terms.`,
-          `1. Mini-Lecture (15 mins): Explain structural categories and standard formulas for ${T}.\n2. Guided Exercise (15 mins): Complete interactive workbook pages.\n3. Wrap-up (15 mins): Clarify misconceptions.`,
+          `1. Mini-Lecture (15 mins): Explain structural categories and formulas for ${T}.\n2. Guided Exercise (15 mins): Complete workbook pages.\n3. Wrap-up (15 mins): Clarify misconceptions.`,
           `1. Learning Stations (30 mins): Rotate through 3 focused activity tables (Station 1: Concept Check, Station 2: Application, Station 3: Troubleshooting).\n2. Debrief (15 mins): Review takeaways.`,
-          `1. Problem-Solving Workshop (30 mins): Create an authentic mini-project utilizing ${T}.\n2. Gallery Walk (15 mins): Peer review and constructive feedback.`,
+          `1. Problem-Solving Workshop (30 mins): Create an authentic mini-project utilizing ${T}.\n2. Gallery Walk (15 mins): Peer review and feedback.`,
           `1. Summative Assessment (25 mins): Execute 5-item evaluation test.\n2. Class Debrief (20 mins): Analyze high-difficulty test items.`
         ]
       ];
 
-      // Endless quiz generation with randomized dynamic questions
       const selectedFlow = pickRandom(teachingStrategies);
       
       const dynamicQuizzes = [
@@ -196,6 +218,7 @@
     function App() {
       const [formData, setFormData] = useState(DEFAULT_FORM_DATA);
       const [hasGeneratedOnce, setHasGeneratedOnce] = useState(false);
+      const [currentJoke, setCurrentJoke] = useState("");
       
       const [planData, setPlanData] = useState(() => 
         buildOfflinePlan(DEFAULT_FORM_DATA.lessonTitle, DEFAULT_FORM_DATA.learningArea, DEFAULT_FORM_DATA.gradeSection)
@@ -207,6 +230,27 @@
       const [userApiKey, setUserApiKey] = useState(() => {
         return localStorage.getItem('deped_gemini_key') || '';
       });
+
+      // Synchronize Joke based on Date and Hour
+      const updateHourlyJoke = () => {
+        const now = new Date();
+        const hour = now.getHours();
+        const date = now.getDate();
+        // Index combination using date + hour to keep it fresh per day
+        const jokeIndex = (hour + date) % HOURLY_TAGALOG_JOKES.length;
+        setCurrentJoke(HOURLY_TAGALOG_JOKES[jokeIndex]);
+      };
+
+      useEffect(() => {
+        updateHourlyJoke();
+        const interval = setInterval(updateHourlyJoke, 60000); // Check every minute
+        return () => clearInterval(interval);
+      }, []);
+
+      const getNewRandomJoke = () => {
+        const randomJoke = pickRandom(HOURLY_TAGALOG_JOKES);
+        setCurrentJoke(randomJoke);
+      };
 
       const handleApiKeyChange = (e) => {
         const key = e.target.value;
@@ -369,77 +413,99 @@ Learner Context: ${formData.learnerContext}`;
 
           <main className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 p-6 max-w-[1700px] mx-auto w-full">
             {/* Input Form Controls */}
-            <div className="lg:col-span-4 bg-white rounded-xl shadow-md border border-slate-200 p-5 space-y-4 no-print h-fit">
-              <h2 className="text-lg font-bold text-slate-800 border-b pb-2">Lesson Inputs</h2>
-              
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">Lesson Title</label>
-                <input type="text" name="lessonTitle" value={formData.lessonTitle} onChange={handleChange} className="w-full text-sm p-2 bg-slate-50 border rounded outline-none focus:ring-1 focus:ring-blue-500" />
-              </div>
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">Learning Area / Subject</label>
-                <input type="text" name="learningArea" value={formData.learningArea} onChange={handleChange} className="w-full text-sm p-2 bg-slate-50 border rounded outline-none focus:ring-1 focus:ring-blue-500" />
-              </div>
-              <div className="grid grid-cols-2 gap-2">
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">Teacher Name</label>
-                  <input type="text" name="teacherName" value={formData.teacherName} onChange={handleChange} className="w-full text-sm p-2 bg-slate-50 border rounded outline-none focus:ring-1 focus:ring-blue-500" />
+            <div className="lg:col-span-4 space-y-4 no-print h-fit">
+
+              {/* Tagalog Good Vibes Joke of the Hour Bar */}
+              <div className="bg-amber-50 border border-amber-200 rounded-xl p-3.5 shadow-sm">
+                <div className="flex justify-between items-center mb-1">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-amber-800 flex items-center gap-1">
+                    <span>😄</span> Teacher's Good Vibes of the Hour
+                  </span>
+                  <button 
+                    onClick={getNewRandomJoke} 
+                    className="text-[10px] bg-amber-200 hover:bg-amber-300 text-amber-900 font-bold px-2 py-0.5 rounded transition"
+                    title="Click for another Tagalog joke"
+                  >
+                    ✨ Hirit Pa!
+                  </button>
                 </div>
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">Grade & Section</label>
-                  <input type="text" name="gradeSection" value={formData.gradeSection} onChange={handleChange} className="w-full text-sm p-2 bg-slate-50 border rounded outline-none focus:ring-1 focus:ring-blue-500" />
-                </div>
-              </div>
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">No. of Sessions</label>
-                <input type="text" name="noOfSessions" value={formData.noOfSessions} onChange={handleChange} className="w-full text-sm p-2 bg-slate-50 border rounded outline-none focus:ring-1 focus:ring-blue-500" />
-              </div>
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">Learning Competency</label>
-                <textarea name="learningCompetency" rows="2" value={formData.learningCompetency} onChange={handleChange} className="w-full text-sm p-2 bg-slate-50 border rounded resize-none outline-none focus:ring-1 focus:ring-blue-500" />
-              </div>
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">Content Standard</label>
-                <textarea name="contentStandard" rows="2" value={formData.contentStandard} onChange={handleChange} className="w-full text-sm p-2 bg-slate-50 border rounded resize-none outline-none focus:ring-1 focus:ring-blue-500" />
-              </div>
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">Performance Standard</label>
-                <textarea name="performanceStandard" rows="2" value={formData.performanceStandard} onChange={handleChange} className="w-full text-sm p-2 bg-slate-50 border rounded resize-none outline-none focus:ring-1 focus:ring-blue-500" />
-              </div>
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">Learner Context</label>
-                <textarea name="learnerContext" rows="3" value={formData.learnerContext} onChange={handleChange} className="w-full text-sm p-2 bg-slate-50 border rounded resize-none outline-none focus:ring-1 focus:ring-blue-500" />
+                <p className="text-xs text-amber-950 font-medium leading-relaxed italic">
+                  "{currentJoke}"
+                </p>
               </div>
 
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">Gemini API Key (Optional for Live AI)</label>
-                <input 
-                  type="password" 
-                  placeholder="Paste AI Studio key (Saved locally on browser)..." 
-                  value={userApiKey} 
-                  onChange={handleApiKeyChange} 
-                  className="w-full text-xs p-2 bg-slate-50 border rounded outline-none focus:ring-1 focus:ring-blue-500" 
-                />
-                <p className="text-[10px] text-slate-500 mt-1">Leave blank to use the universal offline generator.</p>
-              </div>
+              <div className="bg-white rounded-xl shadow-md border border-slate-200 p-5 space-y-4">
+                <h2 className="text-lg font-bold text-slate-800 border-b pb-2">Lesson Inputs</h2>
+                
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">Lesson Title</label>
+                  <input type="text" name="lessonTitle" value={formData.lessonTitle} onChange={handleChange} className="w-full text-sm p-2 bg-slate-50 border rounded outline-none focus:ring-1 focus:ring-blue-500" />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">Learning Area / Subject</label>
+                  <input type="text" name="learningArea" value={formData.learningArea} onChange={handleChange} className="w-full text-sm p-2 bg-slate-50 border rounded outline-none focus:ring-1 focus:ring-blue-500" />
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-700 mb-1">Teacher Name</label>
+                    <input type="text" name="teacherName" value={formData.teacherName} onChange={handleChange} className="w-full text-sm p-2 bg-slate-50 border rounded outline-none focus:ring-1 focus:ring-blue-500" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-700 mb-1">Grade & Section</label>
+                    <input type="text" name="gradeSection" value={formData.gradeSection} onChange={handleChange} className="w-full text-sm p-2 bg-slate-50 border rounded outline-none focus:ring-1 focus:ring-blue-500" />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">No. of Sessions</label>
+                  <input type="text" name="noOfSessions" value={formData.noOfSessions} onChange={handleChange} className="w-full text-sm p-2 bg-slate-50 border rounded outline-none focus:ring-1 focus:ring-blue-500" />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">Learning Competency</label>
+                  <textarea name="learningCompetency" rows="2" value={formData.learningCompetency} onChange={handleChange} className="w-full text-sm p-2 bg-slate-50 border rounded resize-none outline-none focus:ring-1 focus:ring-blue-500" />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">Content Standard</label>
+                  <textarea name="contentStandard" rows="2" value={formData.contentStandard} onChange={handleChange} className="w-full text-sm p-2 bg-slate-50 border rounded resize-none outline-none focus:ring-1 focus:ring-blue-500" />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">Performance Standard</label>
+                  <textarea name="performanceStandard" rows="2" value={formData.performanceStandard} onChange={handleChange} className="w-full text-sm p-2 bg-slate-50 border rounded resize-none outline-none focus:ring-1 focus:ring-blue-500" />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">Learner Context</label>
+                  <textarea name="learnerContext" rows="3" value={formData.learnerContext} onChange={handleChange} className="w-full text-sm p-2 bg-slate-50 border rounded resize-none outline-none focus:ring-1 focus:ring-blue-500" />
+                </div>
 
-              {/* Action Buttons */}
-              <div className="flex gap-2 pt-2">
-                <button 
-                  onClick={generatePlan} 
-                  disabled={loading} 
-                  className="flex-1 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg shadow transition flex items-center justify-center gap-1.5 text-xs sm:text-sm"
-                >
-                  {loading ? "Generating..." : (hasGeneratedOnce ? "⚡ GENERATE VARIATION" : "⚡ GENERATE ILAW LESSON PLAN")}
-                </button>
-                <button 
-                  onClick={handleRefresh} 
-                  type="button"
-                  title="Reload Application Page"
-                  className="px-4 py-3 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-lg shadow-sm transition text-xs sm:text-sm flex items-center gap-1"
-                >
-                  <span>↻</span> Refresh
-                </button>
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">Gemini API Key (Optional for Live AI)</label>
+                  <input 
+                    type="password" 
+                    placeholder="Paste AI Studio key (Saved locally on browser)..." 
+                    value={userApiKey} 
+                    onChange={handleApiKeyChange} 
+                    className="w-full text-xs p-2 bg-slate-50 border rounded outline-none focus:ring-1 focus:ring-blue-500" 
+                  />
+                  <p className="text-[10px] text-slate-500 mt-1">Leave blank to use the universal offline generator.</p>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex gap-2 pt-2">
+                  <button 
+                    onClick={generatePlan} 
+                    disabled={loading} 
+                    className="flex-1 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg shadow transition flex items-center justify-center gap-1.5 text-xs sm:text-sm"
+                  >
+                    {loading ? "Generating..." : (hasGeneratedOnce ? "⚡ GENERATE VARIATION" : "⚡ GENERATE ILAW LESSON PLAN")}
+                  </button>
+                  <button 
+                    onClick={handleRefresh} 
+                    type="button"
+                    title="Reload Application Page"
+                    className="px-4 py-3 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-lg shadow-sm transition text-xs sm:text-sm flex items-center gap-1"
+                  >
+                    <span>↻</span> Refresh
+                  </button>
+                </div>
               </div>
             </div>
 
